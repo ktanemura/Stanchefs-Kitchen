@@ -1,0 +1,6 @@
+example/
+.idea/
+build/
+dist/
+nbproject/private
+/src/example/DbTest/nbproject/private/
