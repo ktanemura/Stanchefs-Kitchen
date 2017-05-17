@@ -2,13 +2,13 @@ package com.stanchefskitchen.data.models;
 
 /**
  *
- * @author brittanyberlanga
+ * @author Brittany Berlanga
  */
 public class MenuItem {
     //TODO add meal type and item type
-    public String name;
-    public double price;
-    public String description;
+    public final String name;
+    public final double price;
+    public final String description;
     
     public MenuItem(String name, double price, String description) {
         this.name = name;
