@@ -9,13 +9,13 @@ public class MenuItem {
     public final String name;
     public final double price;
     public final String description;
-    public final MealType mealType;
+    public final ItemType itemType;
     
     public MenuItem(String name, double price, String description, 
-            MealType mealType) {
+            ItemType itemType) {
         this.name = name;
         this.price = price;
         this.description = description;
-        this.mealType = mealType;
+        this.itemType = itemType;
     }
 }

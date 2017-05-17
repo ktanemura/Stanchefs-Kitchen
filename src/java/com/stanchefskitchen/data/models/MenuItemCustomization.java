@@ -16,9 +16,9 @@ public class MenuItemCustomization {
     private int customizationId;
     
     // Attribute names
-    public String ID = "id";
-    public String ITEM_NAME = "itemName";
-    public String CUSTOMIZATION = "customizationId";
+    public static final String ID = "id";
+    public static final String ITEM_NAME = "itemName";
+    public static final String CUSTOMIZATION = "customizationId";
 
     public MenuItemCustomization(int id, String itemName, int customizationId) {
         this.id = id;
@@ -37,4 +37,5 @@ public class MenuItemCustomization {
     public int getCustomizationId() {
         return customizationId;
     }    
+       
 }
