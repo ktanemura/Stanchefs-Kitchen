@@ -10,5 +10,5 @@ package com.stanchefskitchen.data.models;
  * @author Ryan
  */
 public enum OrderStatus {
-    PREPARING, READY, DELIVERING, COMPLETE;
+    PREPARING, READY, DELIVERING, CANCELLED, COMPLETE;
 }
