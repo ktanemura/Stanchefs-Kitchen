@@ -1,6 +1,7 @@
 package com.stanchefskitchen.data.providers;
 
 import com.stanchefskitchen.data.models.Customization;
+import com.stanchefskitchen.data.models.ItemType;
 import com.stanchefskitchen.data.models.MenuItem;
 import com.stanchefskitchen.data.models.MenuItemType;
 import java.sql.Connection;
@@ -21,6 +22,8 @@ public class MenuItemProvider {
     public static final String GET_CUSTOMIZATIONS = "SELECT c.id, c.description"
             + ", c.price FROM menuitemcustomization m, customization c WHERE it"
             + "emname = ?;";
+    public static final String GET_TYPES = "SELECT id, name FROM menuitemty"
+            + "pe, itemtype WHERE menuitem = ?;";
     public static final String ADD_CUSTOM = "INSERT INTO menuitemcustomization "
             + "(itemname, customizationid) values (?, ?);";
     public static final String REMOVE_CUSTOM = "DELETE FROM menuitemcustomizati"
@@ -48,6 +51,25 @@ public class MenuItemProvider {
             System.out.println("Could not get customizations");
         }     
         return customizations;
+    }
+    
+    public static List<ItemType> getItemTypes(MenuItem menuItem) {
+        List<ItemType> itemTypes = new ArrayList();
+        try {
+            PreparedStatement statement = connection
+                    .prepareStatement(GET_TYPES);
+            statement.setString(1, menuItem.name);
+            ResultSet results = statement.executeQuery();
+            while (results.next()) {
+                itemTypes.add(
+                        new ItemType(results.getInt(ItemType.ID), 
+                        results.getString(ItemType.NAME)));
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Could not get item types");
+        }     
+        return itemTypes;
     }
     
     public static boolean addCustomization(MenuItem menuItem, 
