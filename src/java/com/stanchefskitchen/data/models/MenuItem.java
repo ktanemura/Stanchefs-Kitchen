@@ -5,7 +5,6 @@ package com.stanchefskitchen.data.models;
  * @author Brittany Berlanga
  */
 public class MenuItem {
-    //TODO add item type
     public final String name;
     public final double price;
     public final String description;

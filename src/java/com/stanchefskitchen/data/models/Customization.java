@@ -5,6 +5,10 @@ package com.stanchefskitchen.data.models;
  * @author Brittany Berlanga
  */
 public class Customization {
+    public static final String ID = "id";
+    public static final String DESCRIPTION = "description";
+    public static final String PRICE = "price";
+    
     public final int id;
     public final String description;
     public final double price;
