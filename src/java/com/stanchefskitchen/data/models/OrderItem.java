@@ -16,7 +16,6 @@ public class OrderItem {
     public int quantity;
     
     public OrderItem (int id, int orderId, String itemName, int quantity) {
-        this.id = id;
         this.orderId = orderId;
         this.itemName = itemName;
         this.quantity = quantity;

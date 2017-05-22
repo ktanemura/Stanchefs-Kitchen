@@ -29,6 +29,7 @@ public class OrderProvider {
     private final String INSERT_ITEM = "INSERT INTO orderItem (orderId, itemName, quantity) " +
             "VALUES (?,?,?)";
     private final String INSERT_CUSTOM = "INSERT INTO orderItemCustomization VALUES (?,?)";
+    private final String UPDATE_STATUS = "UPDATE order SET status = ? WHERE id = ?";
     
     public ArrayList<OrderItem> getOrderItems(int orderId) {
         try {
@@ -129,6 +130,35 @@ public class OrderProvider {
             System.out.println("Error adding order item: "+e.toString());
             
             return null;
+        }
+    }
+    
+    public static String statusToString(OrderStatus status) {
+        switch(status) {
+            case PREPARING:
+                return "cooking";
+            case READY:
+                return "ready";
+            case DELIVERING:
+                return "delivering";
+            case CANCELLED:
+                return "cancelled";
+            case COMPLETE:
+                return "completed";
+        }
+        
+        return "this will never be returned Java";
+    }
+    
+    public void changeOrderStatus(int orderId, OrderStatus status) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(UPDATE_STATUS);
+            statement.setString(1, statusToString(status));
+            statement.setInt(2, orderId);
+            statement.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.out.println("Error changing order status: "+e.toString());
         }
     }
 }
