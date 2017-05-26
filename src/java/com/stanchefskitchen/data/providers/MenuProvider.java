@@ -20,7 +20,7 @@ public class MenuProvider {
     public static List<MenuItem> getSpecificItems(List<String> allowedTypes) {
         HashSet<String> allowed = new HashSet<String>(allowedTypes);
         ArrayList<MenuItem> filteredItems = new ArrayList<MenuItem>();
-        List<MenuItem> allItems; // Need to initialize to call from MenuItemProvider for all items
+        List<MenuItem> allItems = MenuItemProvider.getAllMenuItems();
         List<ItemType> types;
         for (MenuItem item : allItems) {
             types = ItemTypeProvider.getMenuItemType(item.name);

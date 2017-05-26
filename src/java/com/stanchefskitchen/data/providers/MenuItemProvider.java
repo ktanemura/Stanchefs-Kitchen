@@ -32,6 +32,25 @@ public class MenuItemProvider {
             + "values (?, ?);";
     public static final String REMOVE_TYPE = "DELETE FROM menuitemtype WHERE me"
             + "nuitem = ? AND itemtypeid = ?;";
+    public static final String GET_ALL_ITEMS = "SELECT * FROM menuitem;";
+    
+    public static List<MenuItem> getAllMenuItems() {
+        List<MenuItem> menuItems = new ArrayList();
+        try {
+            ResultSet results = connection.createStatement()
+                    .executeQuery(GET_ALL_ITEMS);
+            while (results.next()) {
+                menuItems.add(
+                        new MenuItem(results.getString(MenuItem.NAME),
+                        results.getDouble(MenuItem.PRICE),
+                        results.getString(MenuItem.DESC)));
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Could not all items");
+        }     
+        return menuItems;
+    }
     
     public static List<Customization> getCustomizations(MenuItem menuItem) {
         List<Customization> customizations = new ArrayList();
