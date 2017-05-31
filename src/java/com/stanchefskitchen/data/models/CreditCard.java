@@ -11,14 +11,20 @@ public class CreditCard {
     private int customerId;
     private int crc;
     private String address;
-    private Date date;
+    private Date expDate;
     
-    public CreditCard(String number, int customerId, int crc, String address, Date date) {
+    public static final String NUMBER = "number";
+    public static final String CUSTOMER_ID = "customerId";
+    public static final String CRC = "crc";
+    public static final String ADDRESS = "address";
+    public static final String EXP_DATE = "expdate";
+    
+    public CreditCard(String number, int customerId, int crc, String address, Date expDate) {
         this.number = number;
         this.customerId = customerId;
         this.crc = crc;
         this.address = address;
-        this.date = date;
+        this.expDate = expDate;
     }
     
     public String getNumber() {
@@ -37,7 +43,7 @@ public class CreditCard {
         return address;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getExpDate() {
+        return expDate;
     }
 }
