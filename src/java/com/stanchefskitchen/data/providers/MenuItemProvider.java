@@ -33,6 +33,8 @@ public class MenuItemProvider {
     public static final String REMOVE_TYPE = "DELETE FROM menuitemtype WHERE me"
             + "nuitem = ? AND itemtypeid = ?;";
     public static final String GET_ALL_ITEMS = "SELECT * FROM menuitem;";
+    public static final String GET_ALL_AVAIL_ITEMS = "SELECT * FROM menuitem "
+            + "WHERE available = true;";
     
     public static List<MenuItem> getAllMenuItems() {
         List<MenuItem> menuItems = new ArrayList();
@@ -43,11 +45,31 @@ public class MenuItemProvider {
                 menuItems.add(
                         new MenuItem(results.getString(MenuItem.NAME),
                         results.getDouble(MenuItem.PRICE),
-                        results.getString(MenuItem.DESC)));
+                        results.getString(MenuItem.DESC),
+                        results.getBoolean(MenuItem.AVAIL)));
             }
         }
         catch (SQLException e) {
-            System.out.println("Could not all items");
+            System.out.println("Could not get all items");
+        }     
+        return menuItems;
+    }
+    
+    public static List<MenuItem> getAllAvailableMenuItems() {
+        List<MenuItem> menuItems = new ArrayList();
+        try {
+            ResultSet results = connection.createStatement()
+                    .executeQuery(GET_ALL_AVAIL_ITEMS);
+            while (results.next()) {
+                menuItems.add(
+                        new MenuItem(results.getString(MenuItem.NAME),
+                        results.getDouble(MenuItem.PRICE),
+                        results.getString(MenuItem.DESC),
+                        results.getBoolean(MenuItem.AVAIL)));
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Could not get all available items");
         }     
         return menuItems;
     }
