@@ -6,6 +6,7 @@
 package com.stanchefskitchen.data.providers;
 
 import com.stanchefskitchen.data.models.ItemType;
+import com.stanchefskitchen.data.models.MenuItem;
 import com.stanchefskitchen.data.models.MenuItemType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,9 +30,13 @@ public class ItemTypeProvider {
     private static final String GET_MENUITEM_TYPES = "select i.id, i.name "
             + "from ItemType i join MenuItem m "
             + "on m.itemTypeId = i.id where m.name = ?;";
+    private static final String GET_MENUITEMS_TYPE = "select m.name, m.price, m.description from "
+            + "MenuItem m left join MenuItemType mi on m.name = mi.menuItem "
+            + "where not(m.name = null) and mi.itemTypeId = ?;";
     private static final String ADD_TYPE = "insert into ItemType(name) values(?);";
     private static final String UPDATE_TYPE = "update ItemType set name = ? where id = ?;";
-    private static final String DELETE_TYPE = "deleteom ItemType where id = ?;";
+    private static final String DELETE_TYPE = "delete from ItemType where id = ?;";
+    
     public static ItemType getTypeById(int itemTypeId) {
         ItemType type = null;
         try {
@@ -92,6 +97,27 @@ public class ItemTypeProvider {
         }
         
         return types;
+    }
+    
+    public static List<MenuItem> getMenuItemsOfType(List<String> allowedTypes) {
+        /* Wait for now */
+        HashSet<MenuItem> list = new HashSet<MenuItem>();
+        for (String type : allowedTypes) {
+            ItemType i = ItemTypeProvider.getTypeByName(type);
+            try { 
+                PreparedStatement s = connection.prepareStatement(GET_MENUITEMS_TYPE);
+                s.setInt(1, i.getId());
+                ResultSet r = s.executeQuery();
+                
+                while (r.next()) {
+                    MenuItem item = new MenuItem(r.getString(MenuItem.NAME), r.getDouble(MenuItem.PRICE), r.getString(MenuItem.DESC));
+                    list.add(item);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ItemTypeProvider.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return new ArrayList<MenuItem>(list);
     }
     
     public static void addItemType(String name) {
