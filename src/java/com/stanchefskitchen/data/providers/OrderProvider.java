@@ -25,6 +25,7 @@ public class OrderProvider {
     
     private final String ORDERITEM_BY_ID = "SELECT * FROM orderitem WHERE orderId = ?";
     private final String CUSTOM_BY_ID = "SELECT * FROM orderItemCustomization WHERE orderId = ?";
+    private final String ORDER_BY_CUSTOMER = "SELECT * FROM order WHERE customerId = ?";
     private final String INSERT_ORDER = "INSERT INTO order (customerId, billId) VALUES (?,?)";
     private final String INSERT_ITEM = "INSERT INTO orderItem (orderId, itemName, quantity) " +
             "VALUES (?,?,?)";
@@ -47,6 +48,26 @@ public class OrderProvider {
         }
         catch (SQLException e) {
             System.out.println("Error getting order items: "+e.toString());
+            return null;
+        }
+    }
+    
+    public ArrayList<Order> getOrdersByCustomerId(int customerId) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(ORDER_BY_CUSTOMER);
+            statement.setInt(1, customerId);
+            ResultSet results = statement.executeQuery();
+            
+            ArrayList<Order> orders = new ArrayList<>();
+            while (results.next()) {
+                orders.add(new Order(results.getInt(1), results.getInt(2), 
+                        results.getInt(3), stringToStatus(results.getString(4))));
+            }
+            
+            return orders;
+        }
+        catch (SQLException e) {
+            System.out.println("Error getting order customizations: "+e.toString());
             return null;
         }
     }
@@ -148,6 +169,24 @@ public class OrderProvider {
         }
         
         return "this will never be returned Java";
+    }
+    
+    public static OrderStatus stringToStatus(String str) {
+        switch(str) {
+            case "cooking":
+                return OrderStatus.PREPARING;
+            case "ready":
+                return OrderStatus.READY;
+            case "delivering":
+                return OrderStatus.DELIVERING;
+            case "cancelled":
+                return OrderStatus.CANCELLED;
+            case "completed":
+                return OrderStatus.COMPLETE;
+            default:
+                System.out.println("Invalid String: "+str);
+                return null;
+        }
     }
     
     public void changeOrderStatus(int orderId, OrderStatus status) {
