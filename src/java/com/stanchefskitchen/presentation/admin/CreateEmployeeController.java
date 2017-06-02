@@ -38,6 +38,10 @@ public class CreateEmployeeController {
             msg = new FacesMessage(E_PASSWORD, CREATE_FAIL);
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
         }
+        else if (AccountProvider.usernameExists(username)) {
+            msg = new FacesMessage(E_USERNAME, CREATE_FAIL);
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+        }
         else {
             Account account = new Account(username, password, firstName, 
                         lastName, AccountType.employee);
