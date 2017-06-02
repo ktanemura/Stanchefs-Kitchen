@@ -23,17 +23,17 @@ import java.util.*;
 public class OrderProvider {
     private static Connection connection = DatabaseProvider.getConnection();
     
-    private final String INCOMP_ORDERS = "SELECT * FROM order WHERE status != ?";
-    private final String ORDERITEM_BY_ID = "SELECT * FROM orderitem WHERE orderId = ?";
-    private final String CUSTOM_BY_ID = "SELECT * FROM orderItemCustomization WHERE orderId = ?";
-    private final String ORDER_BY_CUSTOMER = "SELECT * FROM order WHERE customerId = ?";
-    private final String INSERT_ORDER = "INSERT INTO order (customerId, billId) VALUES (?,?)";
-    private final String INSERT_ITEM = "INSERT INTO orderItem (orderId, itemName, quantity) " +
+    private static final String INCOMP_ORDERS = "SELECT * FROM order WHERE status != ?";
+    private static final String ORDERITEM_BY_ID = "SELECT * FROM orderitem WHERE orderId = ?";
+    private static final String CUSTOM_BY_ID = "SELECT * FROM orderItemCustomization WHERE orderId = ?";
+    private static final String ORDER_BY_CUSTOMER = "SELECT * FROM order WHERE customerId = ?";
+    private static final String INSERT_ORDER = "INSERT INTO order (customerId, billId) VALUES (?,?)";
+    private static final String INSERT_ITEM = "INSERT INTO orderItem (orderId, itemName, quantity) " +
             "VALUES (?,?,?)";
-    private final String INSERT_CUSTOM = "INSERT INTO orderItemCustomization VALUES (?,?)";
-    private final String UPDATE_STATUS = "UPDATE order SET status = ? WHERE id = ?";
+    private static final String INSERT_CUSTOM = "INSERT INTO orderItemCustomization VALUES (?,?)";
+    private static final String UPDATE_STATUS = "UPDATE order SET status = ? WHERE id = ?";
     
-    public ArrayList<Order> getIncompleteOrders() {
+    public static ArrayList<Order> getIncompleteOrders() {
         try {
             PreparedStatement statement = connection.prepareStatement(INCOMP_ORDERS);
             statement.setString(1, statusToString(OrderStatus.COMPLETE));
@@ -53,7 +53,7 @@ public class OrderProvider {
         }
     }
     
-    public ArrayList<OrderItem> getOrderItems(int orderId) {
+    public static ArrayList<OrderItem> getOrderItems(int orderId) {
         try {
             PreparedStatement statement = connection.prepareStatement(ORDERITEM_BY_ID);
             statement.setInt(1, orderId);
@@ -73,7 +73,7 @@ public class OrderProvider {
         }
     }
     
-    public ArrayList<Order> getOrdersByCustomerId(int customerId) {
+    public static ArrayList<Order> getOrdersByCustomerId(int customerId) {
         try {
             PreparedStatement statement = connection.prepareStatement(ORDER_BY_CUSTOMER);
             statement.setInt(1, customerId);
@@ -93,7 +93,7 @@ public class OrderProvider {
         }
     }
     
-    public ArrayList<OrderItemCustomization> getOrderCustomizations(int orderId) {
+    public static ArrayList<OrderItemCustomization> getOrderCustomizations(int orderId) {
         try {
             PreparedStatement statement = connection.prepareStatement(ORDERITEM_BY_ID);
             statement.setInt(1, orderId);
@@ -118,7 +118,7 @@ public class OrderProvider {
      * @param billId
      * @return Order object with the id created
      */
-    public Order placeOrder(int customerId, int billId) {
+    public static Order placeOrder(int customerId, int billId) {
         try {
             PreparedStatement statement = connection.prepareStatement(INSERT_ORDER);
             statement.setInt(1, customerId);
@@ -138,7 +138,7 @@ public class OrderProvider {
         }
     }
     
-    public OrderItem addOrderItem(int orderId, String itemName, int quantity) {
+    public static OrderItem addOrderItem(int orderId, String itemName, int quantity) {
         try {
             PreparedStatement statement = connection.prepareStatement(INSERT_ITEM);
             statement.setInt(1, orderId);
@@ -159,7 +159,7 @@ public class OrderProvider {
         }
     }
     
-    public OrderItemCustomization addOrderCustomization(int orderItemId, int menuItemCustomizationId) {
+    public static OrderItemCustomization addOrderCustomization(int orderItemId, int menuItemCustomizationId) {
         try {
             PreparedStatement statement = connection.prepareStatement(INSERT_ORDER);
             statement.setInt(1, orderItemId);
@@ -210,7 +210,7 @@ public class OrderProvider {
         }
     }
     
-    public void changeOrderStatus(int orderId, OrderStatus status) {
+    public static void changeOrderStatus(int orderId, OrderStatus status) {
         try {
             PreparedStatement statement = connection.prepareStatement(UPDATE_STATUS);
             statement.setString(1, statusToString(status));
