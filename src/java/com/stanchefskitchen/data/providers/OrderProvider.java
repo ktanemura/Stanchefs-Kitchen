@@ -23,6 +23,7 @@ import java.util.*;
 public class OrderProvider {
     private static Connection connection = DatabaseProvider.getConnection();
     
+    private final String INCOMP_ORDERS = "SELECT * FROM order WHERE status != ?";
     private final String ORDERITEM_BY_ID = "SELECT * FROM orderitem WHERE orderId = ?";
     private final String CUSTOM_BY_ID = "SELECT * FROM orderItemCustomization WHERE orderId = ?";
     private final String ORDER_BY_CUSTOMER = "SELECT * FROM order WHERE customerId = ?";
@@ -31,6 +32,26 @@ public class OrderProvider {
             "VALUES (?,?,?)";
     private final String INSERT_CUSTOM = "INSERT INTO orderItemCustomization VALUES (?,?)";
     private final String UPDATE_STATUS = "UPDATE order SET status = ? WHERE id = ?";
+    
+    public ArrayList<Order> getIncompleteOrders() {
+        try {
+            PreparedStatement statement = connection.prepareStatement(INCOMP_ORDERS);
+            statement.setString(1, statusToString(OrderStatus.COMPLETE));
+            ResultSet results = statement.executeQuery();
+            
+            ArrayList<Order> orders = new ArrayList<>();
+            while (results.next()) {
+                orders.add(new Order(results.getInt(1), results.getInt(2), 
+                        results.getInt(3), stringToStatus(results.getString(4))));
+            }
+            
+            return orders;
+        }
+        catch (SQLException e) {
+            System.out.println("Error getting orders: "+e.toString());
+            return null;
+        }
+    }
     
     public ArrayList<OrderItem> getOrderItems(int orderId) {
         try {
