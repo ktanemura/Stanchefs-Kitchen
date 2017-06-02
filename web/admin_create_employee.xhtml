@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <head>
+        <title>Create Employee Account</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- CSS -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"></link>
+        <link href="css/normalize.css" rel="stylesheet"></link>
+        <link href="css/main.css" rel="stylesheet"></link>
+        <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
+        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
+    </head>
+    <body>
+        <div class="container row">
+            <h3>Create New Employee Account</h3>
+            <h:form class="col s6">
+                <div class="row">
+                    <div class="input-field">
+                        <h:inputText binding="#{newEmplController.emplFirstNameInput}"/>
+                        <label for="first">First</label>
+                    </div>
+                    <div class="input-field">
+                        <h:inputText binding="#{newEmplController.emplLastNameInput}"/>
+                        <label for="last">Last</label>
+                    </div>
+                    <div class="input-field">
+                        <h:inputText binding="#{newEmplController.emplUsernameInput}"/>
+                        <label for="username">Username</label>
+                    </div>
+                    <div class="input-field">
+                        <h:inputSecret binding="#{newEmplController.emplPasswordInput}"/>
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="input-field">
+                        <h:inputSecret validator="#{newEmplController.validateNewEmployee}"/>
+                        <label for="confirm">Confirm Password</label>
+                    </div>
+                </div>
+                <br></br>
+                <h:commandButton class="waves-effect waves-light btn" value="Create Employee"/>
+            </h:form>
+        </div>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+    </body>
+</html>
