@@ -116,7 +116,10 @@ public class CustomizationProvider {
             ResultSet r = s.executeQuery();
             
             while (r.next()) {
-                MenuItem i = new MenuItem(r.getString(MenuItem.NAME), r.getDouble(MenuItem.PRICE), r.getString(MenuItem.DESC));
+                MenuItem i = new MenuItem(r.getString(MenuItem.NAME), 
+                        r.getDouble(MenuItem.PRICE), 
+                        r.getString(MenuItem.DESC),
+                        r.getBoolean(MenuItem.AVAIL));
                 list.add(i);
             }
         } catch (SQLException ex) {

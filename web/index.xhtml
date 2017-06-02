@@ -3,10 +3,154 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
-        <title>Facelet Title</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="theme-color" content="#009688" />
+
+        <!-- MOBILE -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+
+        <title>Stanchef's Kitchen</title>
+
+        <!-- CSS  -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
+        <link href="css/normalize.css" rel="stylesheet"></link>
+        <link href="css/main.css" rel="stylesheet"></link>
+        <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
+        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <nav class="white" role="navigation">
+            <div class="nav-wrapper container">
+                <a id="logo-container" href="#" class="brand-logo teal-text text-lighten-2">Stanchef's Kitchen</a>
+                <ul class="right hide-on-med-and-down">
+                    <li><h:link class="teal-text text-lighten-2" outcome="#{navController.goToLogin()}">Login</h:link></li>
+                </ul>
+
+                <ul id="nav-mobile" class="side-nav">
+                    <li><a href="#">Navbar Link</a></li>
+                </ul>
+                <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+            </div>
+        </nav>
+
+        <div id="index-banner" class="parallax-container">
+            <div class="section no-pad-bot">
+                <div class="container">
+                    <br/><br/>
+                    <h1 class="header center teal-text text-lighten-2">Stanchef's Kitchen</h1>
+                    <div class="row center">
+                        <h5 class="header col s12 light white-text">A modern restaurant for the 21st century.</h5>
+                    </div>
+                    <div class="row center">
+                        <h:form>
+                            <h:commandButton action="#{navController.goToLogin()}" id="download-button" class="btn-large waves-effect waves-light teal lighten-1" value="Book a stay"/>
+                        </h:form>
+                    </div>
+                    <div class="row center">
+                        <h:form>
+                            <h:commandButton action="#{navController.goToRoomList()}" id="download-button" class="btn-large waves-effect waves-light teal lighten-1" value="View Rooms"/>
+                        </h:form>
+                    </div>
+                    <br/><br/>
+
+                </div>
+            </div>
+            <div class="parallax"><img src="images/background1.jpg"/></div>
+        </div>
+
+        <div class="container">
+            <div class="section">
+
+                <!--   Icon Section   -->
+                <div class="row">
+                    <div class="col s12 m4">
+                        <div class="icon-block">
+                            <h2 class="center brown-text"><i class="material-icons">today</i></h2>
+                            <h5 class="center">Weekend Getaway</h5>
+
+                            <p class="light">Book a room now for your ideal vacation! Choose between pool or ocean views.</p>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m4">
+                        <div class="icon-block">
+                            <h2 class="center brown-text"><i class="material-icons">group</i></h2>
+                            <h5 class="center">Best In-Class Experience</h5>
+
+                            <p class="light">Experience is a priority with resort spas and room service.</p>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m4">
+                        <div class="icon-block">
+                            <h2 class="center brown-text"><i class="material-icons">settings</i></h2>
+                            <h5 class="center">All Day Front Desk Support</h5>
+
+                            <p class="light">Our front desk is open 24/7 to meet your needs.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="parallax-container valign-wrapper">
+            <div class="section no-pad-bot">
+                <div class="container">
+                    <div class="row center">
+                        <h5 class="header col s12 light white-text">Many locations to choose from.</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="parallax"><img src="images/background2.jpg"/></div>
+        </div>
+
+        <div class="container">
+            <div class="section">
+
+                <div class="row">
+                    <div class="col s12 center">
+                        <h3><i class="mdi-content-send brown-text"></i></h3>
+                        <h4>Contact Us</h4>
+                        <p class="left-align light">Our front desk is open 24/7 and will answer any questions you might have!</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="parallax-container valign-wrapper">
+            <div class="section no-pad-bot">
+                <div class="container">
+                    <div class="row center">
+                        <h5 class="header col s12 light white-text">A modern hotel with the best attractions.</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="parallax"><img src="images/background3.jpg"/></div>
+        </div>
+
+        <footer class="page-footer teal">
+            <div class="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <h5 class="white-text">Company Bio</h5>
+                        <p class="grey-text text-lighten-4">We are a team of college students working on this project for our database course at Cal Poly.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container">
+                    Made by Team No Name (Brittany Berlanga, Kyle Tanemura, Ryan McKinney, Tyler Wong)
+                </div>
+            </div>
+        </footer>
+
+        <!--  Scripts-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script type="text/javascript" src="js/init.js"></script>
+
     </h:body>
 </html>
-

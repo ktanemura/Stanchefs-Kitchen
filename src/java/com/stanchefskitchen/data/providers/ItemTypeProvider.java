@@ -110,7 +110,10 @@ public class ItemTypeProvider {
                 ResultSet r = s.executeQuery();
                 
                 while (r.next()) {
-                    MenuItem item = new MenuItem(r.getString(MenuItem.NAME), r.getDouble(MenuItem.PRICE), r.getString(MenuItem.DESC));
+                    MenuItem item = new MenuItem(r.getString(MenuItem.NAME), 
+                            r.getDouble(MenuItem.PRICE), 
+                            r.getString(MenuItem.DESC),
+                            r.getBoolean(MenuItem.AVAIL));
                     list.add(item);
                 }
             } catch (SQLException ex) {

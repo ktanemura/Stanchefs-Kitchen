@@ -5,12 +5,12 @@ package com.stanchefskitchen.data.models;
  * @author Tyler Wong
  */
 public class Account {
-    private int id;
-    private String username;
-    private String password;
-    private String firstName;
-    private String lastName;
-    private AccountType type;
+    public int id;
+    public String username;
+    public String password;
+    public String firstName;
+    public String lastName;
+    public AccountType type;
     
     public Account() {}
     

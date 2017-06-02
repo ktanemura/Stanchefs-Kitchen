@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    <managed-bean>
+        <managed-bean-name>navController</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.NavController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>userSession</property-name>
+            <value>#{userSession}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>userSession</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.login.Session</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>headerController</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.home.HeaderController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>userSession</property-name>
+            <value>#{userSession}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>signupController</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.signup.SignupController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>adminController</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.admin.HomeController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>newEmplController</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.admin.NewEmployeeController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+</faces-config>
