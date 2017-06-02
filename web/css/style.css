@@ -1,0 +1,15 @@
+html {
+    font-family: 'Roboto';
+}
+
+.title {
+    padding-left: 70px;
+}
+
+.typed-cursor {
+    opacity: 0;
+}
+
+.rightalign {
+    text-align: right;
+}
