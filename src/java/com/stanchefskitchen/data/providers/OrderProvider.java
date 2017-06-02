@@ -27,7 +27,7 @@ public class OrderProvider {
     private static final String ORDERITEM_BY_ID = "SELECT * FROM orderitem WHERE orderId = ?";
     private static final String CUSTOM_BY_ID = "SELECT * FROM orderItemCustomization WHERE orderId = ?";
     private static final String ORDER_BY_CUSTOMER = "SELECT * FROM order WHERE customerId = ?";
-    private static final String INSERT_ORDER = "INSERT INTO order (customerId, billId) VALUES (?,?)";
+    private static final String INSERT_ORDER = "INSERT INTO order (customerId, billId, isDelivery) VALUES (?,?, ?)";
     private static final String INSERT_ITEM = "INSERT INTO orderItem (orderId, itemName, quantity) " +
             "VALUES (?,?,?)";
     private static final String INSERT_CUSTOM = "INSERT INTO orderItemCustomization VALUES (?,?)";
@@ -42,7 +42,7 @@ public class OrderProvider {
             ArrayList<Order> orders = new ArrayList<>();
             while (results.next()) {
                 orders.add(new Order(results.getInt(1), results.getInt(2), 
-                        results.getInt(3), stringToStatus(results.getString(4))));
+                        results.getInt(3), results.getBoolean(4), stringToStatus(results.getString(5))));
             }
             
             return orders;
@@ -82,7 +82,7 @@ public class OrderProvider {
             ArrayList<Order> orders = new ArrayList<>();
             while (results.next()) {
                 orders.add(new Order(results.getInt(1), results.getInt(2), 
-                        results.getInt(3), stringToStatus(results.getString(4))));
+                        results.getInt(3), results.getBoolean(4), stringToStatus(results.getString(5))));
             }
             
             return orders;
@@ -118,18 +118,19 @@ public class OrderProvider {
      * @param billId
      * @return Order object with the id created
      */
-    public static Order placeOrder(int customerId, int billId) {
+    public static Order placeOrder(int customerId, int billId, boolean isReady) {
         try {
             PreparedStatement statement = connection.prepareStatement(INSERT_ORDER);
             statement.setInt(1, customerId);
             statement.setInt(2, billId);
+            statement.setBoolean(3, isReady);
             statement.executeUpdate();
             
             ResultSet generatedKeys = statement.getGeneratedKeys();
             generatedKeys.next();
             int newId = generatedKeys.getInt(1);
             
-            return new Order(newId, customerId, billId, OrderStatus.PREPARING);
+            return new Order(newId, customerId, billId, isReady, OrderStatus.RECEIVED);
         }
         catch (SQLException e) {
             System.out.println("Error placing order: "+e.toString());
@@ -177,7 +178,9 @@ public class OrderProvider {
     
     public static String statusToString(OrderStatus status) {
         switch(status) {
-            case PREPARING:
+            case RECEIVED:
+                return "received";
+            case COOKING:
                 return "cooking";
             case READY:
                 return "ready";
@@ -194,8 +197,10 @@ public class OrderProvider {
     
     public static OrderStatus stringToStatus(String str) {
         switch(str) {
+            case "received":
+                return OrderStatus.RECEIVED;
             case "cooking":
-                return OrderStatus.PREPARING;
+                return OrderStatus.COOKING;
             case "ready":
                 return OrderStatus.READY;
             case "delivering":
