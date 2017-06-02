@@ -34,8 +34,5 @@ public class OrderListController {
     public boolean isCancelAvailable(Order o) {
         return o.orderStatus == OrderStatus.RECEIVED;
     }
-    
-    public String cancel(Order o) {
-        
-    }
+
 }
