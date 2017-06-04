@@ -32,7 +32,51 @@ public class OrderListController {
     }
 */
     public boolean isCancelAvailable(Order o) {
+        ordersList.remove(o);
         return o.orderStatus == OrderStatus.RECEIVED;
     }
+    
+    public String cancelOrder(Order o) {
+        OrderProvider.changeOrderStatus(o.id, OrderStatus.CANCELLED);
+        
+        return null;
+    }
+    
+    public boolean isCookingAvailable(Order o) {
+        return o.orderStatus == OrderStatus.RECEIVED;
+    }
+    
+    public String setOrderCooking(Order o) {
+        OrderProvider.changeOrderStatus(o.id, OrderStatus.COOKING);
+        
+        return null;
+    }
+    
+    public boolean isReadyAvailable(Order o) {
+        return o.orderStatus == OrderStatus.COOKING;
+    }
+    
+    public String setOrderReady(Order o) {
+        if (o.isDelivery) {
+            OrderProvider.changeOrderStatus(o.id, OrderStatus.DELIVERING);
+        }
+        else {
+            OrderProvider.changeOrderStatus(o.id, OrderStatus.READY);
+        }
+        
+        return null;
+    }
+    
+    public boolean isCompleteAvailable(Order o) {
+        return o.orderStatus == OrderStatus.READY ? true : o.orderStatus == OrderStatus.DELIVERING;
+    }
+    
+    public String completeOrder(Order o) {
+        OrderProvider.changeOrderStatus(o.id, OrderStatus.COMPLETE);
+        ordersList.remove(o);
+        return null;
+    }
+    
+
 
 }
