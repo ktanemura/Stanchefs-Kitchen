@@ -43,7 +43,7 @@ public class NavController implements Serializable {
     
     public String goToAccountHome() {
         switch (userSession.getAccount().type) {
-            case administrator:
+            case admin:
                 return ADMIN_HOME;
             case employee:
                 return EMPL_HOME;
