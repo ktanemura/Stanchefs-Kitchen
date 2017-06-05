@@ -22,12 +22,12 @@ public class Bill {
     public static final String TIP = "tip";
     public static final String PAID = "paid";
     
-    public Bill(int id, int employeeId, double price) {
+    public Bill(int id, int employeeId, double price, double tip, boolean paid) {
         this.id = id;
         this.employeeId = employeeId;
         this.price = price;
-        this.tip = 0;
-        this .paid = false;
+        this.tip = tip;
+        this.paid = paid;
     }
     
     
