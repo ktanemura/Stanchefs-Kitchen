@@ -36,6 +36,14 @@ public class OrderListController {
         return o.orderStatus == OrderStatus.RECEIVED;
     }
     
+    public String getCancelValue(Order o) {
+        if (isCancelAvailable(o)) {
+            return "Cancel Order";
+        }
+        
+        return null;
+    }
+    
     public String cancelOrder(Order o) {
         OrderProvider.changeOrderStatus(o.id, OrderStatus.CANCELLED);
         
@@ -44,6 +52,14 @@ public class OrderListController {
     
     public boolean isCookingAvailable(Order o) {
         return o.orderStatus == OrderStatus.RECEIVED;
+    }
+    
+    public String getCookingValue(Order o) {
+        if (isCookingAvailable(o)) {
+            return "Begin Cooking";
+        }
+        
+        return null;
     }
     
     public String setOrderCooking(Order o) {
@@ -56,13 +72,16 @@ public class OrderListController {
         return o.orderStatus == OrderStatus.COOKING;
     }
     
+    
     public String getOrderReadyValue(Order o) {
-        if (o.isDelivery) {
+        if (isReadyAvailable(o) && o.isDelivery) {
             return "Send on Delivery";
         }
-        else {
+        else if (isReadyAvailable(o)){
             return "Ready for Pickup";
         }
+        
+        return null;
     }
     
     public String setOrderReady(Order o) {
@@ -80,12 +99,17 @@ public class OrderListController {
         return o.orderStatus == OrderStatus.READY ? true : o.orderStatus == OrderStatus.DELIVERING;
     }
     
+    public String getCompleteValue(Order o) {
+        if (isCompleteAvailable(o)) {
+            return "Complete Order";
+        }
+        
+        return null;
+    }
+    
     public String completeOrder(Order o) {
         OrderProvider.changeOrderStatus(o.id, OrderStatus.COMPLETE);
         ordersList.remove(o);
         return null;
     }
-    
-
-
 }

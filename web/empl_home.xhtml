@@ -40,14 +40,14 @@
                     </h:column>
                     <h:column>
                         <h:form>
-                            <h:commandLink value="Cancel"
+                            <h:commandLink value="#{emplOrderController.getCancelValue(o)}"
                                            disabled="#{!emplOrderController.isCancelAvailable(o)}"
                                            action="#{emplOrderController.cancelOrder(o)}"/>
                         </h:form>
                     </h:column>
                     <h:column>
                         <h:form>
-                            <h:commandLink value="Begin Cooking"
+                            <h:commandLink value="#{emplOrderController.getCookingValue(o)}"
                                            disabled="#{!emplOrderController.isCookingAvailable(o)}"
                                            action="#{emplOrderController.setOrderCooking(o)}"/>
                         </h:form>
@@ -61,7 +61,7 @@
                     </h:column>
                     <h:column>
                         <h:form>
-                            <h:commandLink value="Complete"
+                            <h:commandLink value="#{emplOrderController.getCompleteValue(o)}"
                                            disabled="#{!emplOrderController.isReadyAvailable(o)}"
                                            action="#{emplOrderController.setOrderReady(o)}"/>
                         </h:form>
