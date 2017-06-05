@@ -41,4 +41,9 @@
         <managed-bean-class>com.stanchefskitchen.presentation.admin.NewEmployeeController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>emplOrderController</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.employee.OrderListController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 </faces-config>

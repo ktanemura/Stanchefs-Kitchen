@@ -56,6 +56,15 @@ public class OrderListController {
         return o.orderStatus == OrderStatus.COOKING;
     }
     
+    public String getOrderReadyValue(Order o) {
+        if (o.isDelivery) {
+            return "Send on Delivery";
+        }
+        else {
+            return "Ready for Pickup";
+        }
+    }
+    
     public String setOrderReady(Order o) {
         if (o.isDelivery) {
             OrderProvider.changeOrderStatus(o.id, OrderStatus.DELIVERING);

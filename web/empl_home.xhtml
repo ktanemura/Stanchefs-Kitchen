@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <title>Employee Home | StanChef's Kitchen</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"></link>
+        <link href="css/normalize.css" rel="stylesheet"></link>
+        <link href="css/main.css" rel="stylesheet"></link>
+        <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
+        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
+    </head>
+    <body>
+        <ui:include src="empl_home_header.xhtml"/>
+        <div class="container">
+            <h3>All Reservations</h3>
+            <div class="row">
+                <h:dataTable value="#{emplOrderController.ordersList}" var="o"
+                             class="centered striped" border="1">
+                    <h:column>
+                        <f:facet name="header">Customer Id</f:facet>
+                        #{o.customerId}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Bill Id</f:facet>
+                        #{o.billId}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Is Delivery</f:facet>
+                        #{o.isDelivery}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Order Status</f:facet>
+                        #{o.orderStatus}
+                    </h:column>
+                    <h:column>
+                        <h:form>
+                            <h:commandLink value="Cancel"
+                                           disabled="#{!emplOrderController.isCancelAvailable(o)}"
+                                           action="#{emplOrderController.cancelOrder(o)}"/>
+                        </h:form>
+                    </h:column>
+                    <h:column>
+                        <h:form>
+                            <h:commandLink value="Begin Cooking"
+                                           disabled="#{!emplOrderController.isCookingAvailable(o)}"
+                                           action="#{emplOrderController.setOrderCooking(o)}"/>
+                        </h:form>
+                    </h:column>
+                    <h:column>
+                        <h:form>
+                            <h:commandLink value="#{emplOrderController.getOrderReadyValue(o)}"
+                                           disabled="#{!emplOrderController.isReadyAvailable(o)}"
+                                           action="#{emplOrderController.setOrderReady(o)}"/>
+                        </h:form>
+                    </h:column>
+                    <h:column>
+                        <h:form>
+                            <h:commandLink value="Complete"
+                                           disabled="#{!emplOrderController.isReadyAvailable(o)}"
+                                           action="#{emplOrderController.setOrderReady(o)}"/>
+                        </h:form>
+                    </h:column>
+                </h:dataTable>
+            </div>
+        </div>
+        
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+    </body>
+</html>
