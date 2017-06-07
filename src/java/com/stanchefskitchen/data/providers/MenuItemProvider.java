@@ -19,6 +19,9 @@ public class MenuItemProvider {
     
     private static Connection connection = DatabaseProvider.getConnection();
     
+    public static final String MENU_ITEMS_BY_TYPE = "SELECT mi.name, mi.price, "
+            + "mi.description, mi.available FROM menuitem mi "
+            + "JOIN menuitemtype mit ON mi.name = mit.menuitem WHERE mit.itemtypeid = %d;";
     public static final String GET_CUSTOMIZATIONS = "SELECT c.id, c.description"
             + ", c.price FROM menuitemcustomization m, customization c WHERE it"
             + "emname = ?;";
@@ -71,6 +74,28 @@ public class MenuItemProvider {
         catch (SQLException e) {
             System.out.println("Could not get all available items");
         }     
+        return menuItems;
+    }
+    
+    public static List<MenuItem> getMenuItemsByType(ItemType itemType) {
+        List<MenuItem> menuItems = new ArrayList<>();
+        
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    String.format(MENU_ITEMS_BY_TYPE, itemType.getId()));
+            ResultSet results = statement.executeQuery();
+            
+            while (results.next()) {
+                menuItems.add(new MenuItem(results.getString(MenuItem.NAME), 
+                        results.getDouble(MenuItem.PRICE), 
+                        results.getString(MenuItem.DESC), 
+                        results.getBoolean(MenuItem.AVAIL)));
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Could not get menu item");
+        }
+        
         return menuItems;
     }
     

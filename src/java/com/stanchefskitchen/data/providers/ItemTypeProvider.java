@@ -7,7 +7,6 @@ package com.stanchefskitchen.data.providers;
 
 import com.stanchefskitchen.data.models.ItemType;
 import com.stanchefskitchen.data.models.MenuItem;
-import com.stanchefskitchen.data.models.MenuItemType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,6 +24,7 @@ import java.util.logging.Logger;
 public class ItemTypeProvider {
     private static Connection connection = DatabaseProvider.getConnection();
     
+    private static final String ALL_ITEM_TYPES = "select * from ItemType;";
     private static final String GET_TYPE_ID = "select * from ItemType where id = ?;";
     private static final String GET_TYPE_NAME = "select * from ItemType where name = ?;";
     private static final String GET_MENUITEM_TYPES = "select i.id, i.name "
@@ -121,6 +121,25 @@ public class ItemTypeProvider {
             }
         }
         return new ArrayList<MenuItem>(list);
+    }
+    
+    public static List<ItemType> getAllItemTypes() {
+        List<ItemType> itemTypes = new ArrayList<>();
+        
+        try {
+            PreparedStatement statement = connection.prepareStatement(ALL_ITEM_TYPES);
+            ResultSet results = statement.executeQuery();
+            
+            while (results.next()) {
+                itemTypes.add(new ItemType(results.getInt(ItemType.ID), 
+                        results.getString(ItemType.NAME)));
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Could not get item types");
+        }
+        
+        return itemTypes;
     }
     
     public static void addItemType(String name) {
