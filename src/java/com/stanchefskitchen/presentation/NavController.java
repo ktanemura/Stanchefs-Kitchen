@@ -13,6 +13,7 @@ public class NavController implements Serializable {
     public static final String ADMIN_HOME = "admin_home";
     public static final String EMPL_HOME = "empl_home";
     public static final String CUS_HOME = "cus_home";
+    public static final String MENU = "menu";
     public static final String CREATE_ACCOUNT = "create_account";
     
     private Session userSession;
@@ -39,6 +40,10 @@ public class NavController implements Serializable {
     
     public String goToCreateAccount() {
         return SIGNUP;
+    }
+    
+    public String goToMenu() {
+        return MENU;
     }
     
     public String goToAccountHome() {
