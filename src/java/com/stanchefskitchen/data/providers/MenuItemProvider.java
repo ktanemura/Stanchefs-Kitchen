@@ -150,7 +150,8 @@ public class MenuItemProvider {
             while (results.next()) {
                 itemTypes.add(
                         new ItemType(results.getInt(ItemType.ID), 
-                        results.getString(ItemType.NAME)));
+                        results.getString(ItemType.NAME),
+                        results.getBoolean(ItemType.VISIBLE)));
             }
         }
         catch (SQLException e) {

@@ -8,6 +8,7 @@ import java.util.List;
  * @author Brittany Berlanga
  */
 public class MenuItem {
+
     public final String name;
     public final double price;
     public final String description;
@@ -27,6 +28,30 @@ public class MenuItem {
         this.description = description;
         this.available = available;
         this.itemTypes = new ArrayList();
+    }
+    
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+    
+    public String getFormattedPrice() {
+        return "$" + String.valueOf(price);
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public List<ItemType> getItemTypes() {
+        return itemTypes;
     }
     
     @Override

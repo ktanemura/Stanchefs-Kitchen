@@ -2,7 +2,9 @@ package com.stanchefskitchen.presentation.signup;
 
 import com.stanchefskitchen.data.models.Account;
 import com.stanchefskitchen.data.models.AccountType;
+import com.stanchefskitchen.data.models.CreditCard;
 import com.stanchefskitchen.data.providers.AccountProvider;
+import com.stanchefskitchen.data.providers.CreditCardProvider;
 import com.stanchefskitchen.presentation.NavController;
 import java.sql.Date;
 import javax.faces.application.FacesMessage;
@@ -304,7 +306,12 @@ public class SignupController {
         
         Account account = new Account(username, password, firstName, lastName, 
                 AccountType.customer);
-        if (AccountProvider.addAccount(account) > 0) {
+        int accountId = AccountProvider.addAccount(account);
+        CreditCard card = new CreditCard(cardNum, accountId, Integer.valueOf(crc), 
+                address, parseDate(expiration));
+        int cardId = CreditCardProvider.addCardToAccount(accountId, card);
+        
+        if (accountId > 0 && cardId > 0) {
             return NavController.LOGIN;
         }
         else {
