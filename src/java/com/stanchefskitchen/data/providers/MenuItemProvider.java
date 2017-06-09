@@ -23,8 +23,8 @@ public class MenuItemProvider {
             + "mi.description, mi.available FROM menuitem mi "
             + "JOIN menuitemtype mit ON mi.name = mit.menuitem WHERE mit.itemtypeid = %d;";
     public static final String GET_CUSTOMIZATIONS = "SELECT c.id, c.description"
-            + ", c.price FROM menuitemcustomization m, customization c WHERE it"
-            + "emname = ?;";
+            + ", c.price FROM menuitemcustomization m JOIN customization c ON "
+            + "m.customizationid = c.id WHERE itemname = ?;";
     public static final String GET_TYPES = "SELECT id, name FROM menuitemty"
             + "pe, itemtype WHERE menuitem = ?;";
     public static final String ADD_CUSTOM = "INSERT INTO menuitemcustomization "

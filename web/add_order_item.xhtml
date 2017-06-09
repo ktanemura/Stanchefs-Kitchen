@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Customize/Add Item to Shopping Cart</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!--        CSS -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"></link>
+        <link href="css/normalize.css" rel="stylesheet"></link>
+        <link href="css/main.css" rel="stylesheet"></link>
+        <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
+        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
+    </h:head>
+    <body>
+        <ui:include src="customer_shopping_cart_header.xhtml"/>
+        <div class="container">
+            <div class="row">
+                <h:outputLabel class="col s2" value="Name"/>
+                <h:outputText class="col s10" value="#{addItemController.currentMenuItem.name}"/>
+                <h:outputLabel class="col s2" value="Description"/>
+                <h:outputText class="col s10" value="#{addItemController.currentMenuItem.description}"/>
+                <h:outputLabel class="col s2" value="Price"/>
+                <h:outputText class="col s10" value="#{addItemController.currentMenuItem.price}"/>
+            </div>
+        </div>
+        <div class="container" style="padding-top: 12px;">
+            <h5>Possible Customizations</h5>
+            <div class="row">
+                <h:form>
+                    <h:dataTable value="#{addItemController.customizations}" var="cus" class="centered striped" border="1">
+                        <h:column>
+                            <f:facet name="header">Customization</f:facet>
+                                #{cus.description}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Additional Price</f:facet>
+                                #{cus.price}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"></f:facet>
+                            <h:selectBooleanCheckbox id="add_cus" class="filled-in" value="#{addItemController.selectedCustomizations[cus.id]}"/>
+                            <h:outputLabel value="" for="add_cus" />
+                        </h:column>
+                    </h:dataTable>
+
+                    <div class="col s12 row" style="padding-top: 12px; padding-bottom: 12px;">
+                        <h:outputLabel class="col s2" value="Quantity"/>
+
+                        <h:inputText class="col s2" value="1" validator="#{addItemController.validateQuantity}"/>
+                    </div>
+                    <h:commandButton value="Add to Shopping Cart" class="waves-effect waves-light btn" action="#{addItemController.addItemToShoppingCart}"/>
+                </h:form>
+            </div>
+        </div>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+    </body>
+</html>

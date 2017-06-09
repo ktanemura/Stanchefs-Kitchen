@@ -34,4 +34,21 @@ public class MenuItem {
         return o != null && o.getClass() == MenuItem.class 
                 && ((MenuItem) o).name.equals(name);
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+    
 }

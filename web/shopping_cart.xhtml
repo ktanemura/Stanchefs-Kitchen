@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <title>Shopping Cart</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- CSS -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"></link>
+        <link href="css/normalize.css" rel="stylesheet"></link>
+        <link href="css/main.css" rel="stylesheet"></link>
+        <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
+        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
+    </head>
+    <body>
+        <ui:include src="customer_shopping_cart_header.xhtml"/>
+
+        <div class="container" style="padding-top: 12px;">
+            
+            <h5>Shopping Cart</h5>
+            <h:outputText value="Your shopping cart has #{shoppingCart.itemCount} item(s)" style="padding-top: 24px; padding-bottom: 24px;"/>
+            <h:form>
+                <div class="row">
+
+                    <h:dataTable value="#{shoppingCart.orderItems}" var="itm" class="centered striped" border="1" >
+                        <h:column>
+                            <f:facet name="header">Item</f:facet>
+                                #{itm.menuItem.name}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Quantity</f:facet>
+                                #{itm.quantity}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Customizations</f:facet>
+                            <h:dataTable value="#{itm.customizations}" var="cus" >
+                                <h:column>
+                                    #{cus.description}
+                                </h:column>
+                            </h:dataTable>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Total</f:facet>
+                                #{itm.stringTotal}
+                        </h:column>
+                    </h:dataTable>
+
+                    <h:outputLabel class="col s2" value="Total" style="margin-bottom: 12px; margin-top: 12px;"/>
+                    <h:outputText class="col s10" value="#{shoppingCart.stringTotal}" style="margin-bottom: 12px; margin-top: 12px;"/>
+                    <h:commandButton value="Checkout" class="waves-effect waves-light btn" disabled="#{shoppingCart.isEmpty()}"/>
+                </div>
+            </h:form>
+        </div>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+    </body>
+</html>
