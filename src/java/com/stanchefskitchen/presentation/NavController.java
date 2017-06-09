@@ -65,4 +65,8 @@ public class NavController implements Serializable {
         userSession.logout();
         return LOGIN;
     }
+    
+    public String goToEmpl() {
+        return EMPL_HOME;
+    }
 }
