@@ -32,13 +32,22 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>adminController</managed-bean-name>
-        <managed-bean-class>com.stanchefskitchen.presentation.admin.HomeController</managed-bean-class>
+        <managed-bean-name>createEmplController</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.admin.CreateEmployeeController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>newEmplController</managed-bean-name>
-        <managed-bean-class>com.stanchefskitchen.presentation.admin.NewEmployeeController</managed-bean-class>
+        <managed-bean-name>adminHomeController</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.admin.AdminHomeController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>editMenuItemController</property-name>
+            <value>#{editMenuItemController}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>editMenuItemController</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.admin.EditMenuItemController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>

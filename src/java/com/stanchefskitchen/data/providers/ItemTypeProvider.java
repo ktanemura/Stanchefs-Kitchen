@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -142,14 +143,21 @@ public class ItemTypeProvider {
         return itemTypes;
     }
     
-    public static void addItemType(String name) {
+    public static int addItemType(String name) {
         try {
-            PreparedStatement s = connection.prepareStatement(ADD_TYPE);
+            PreparedStatement s = connection.prepareStatement(ADD_TYPE, 
+                    Statement.RETURN_GENERATED_KEYS);
             s.setString(1, name);
             s.executeUpdate();
+            
+            ResultSet generatedKeys = s.getGeneratedKeys();
+            generatedKeys.next();
+            
+            return generatedKeys.getInt(1);
         } catch (SQLException ex) {
             Logger.getLogger(ItemTypeProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return -1;
     }
     
     public static void updateItemType(int id, String newName) {

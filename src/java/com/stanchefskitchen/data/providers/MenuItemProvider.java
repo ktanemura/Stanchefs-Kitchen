@@ -24,7 +24,7 @@ public class MenuItemProvider {
             + "JOIN menuitemtype mit ON mi.name = mit.menuitem WHERE mit.itemtypeid = %d;";
     public static final String GET_CUSTOMIZATIONS = "SELECT c.id, c.description"
             + ", c.price FROM menuitemcustomization m, customization c WHERE it"
-            + "emname = ?;";
+            + "emname = ? AND c.id = m.customizationid;";
     public static final String GET_TYPES = "SELECT id, name FROM menuitemty"
             + "pe, itemtype WHERE menuitem = ?;";
     public static final String ADD_CUSTOM = "INSERT INTO menuitemcustomization "
@@ -38,6 +38,27 @@ public class MenuItemProvider {
     public static final String GET_ALL_ITEMS = "SELECT * FROM menuitem;";
     public static final String GET_ALL_AVAIL_ITEMS = "SELECT * FROM menuitem "
             + "WHERE available = true;";
+    
+    public static final String ADD_MENU_ITEM = "INSERT INTO menuitem " +
+            "VALUES (?,?,?,?)";
+    
+    public static boolean addMenuItem(MenuItem menuItem) {
+        boolean success = true;
+        try {
+            PreparedStatement statement = connection
+                    .prepareStatement(ADD_MENU_ITEM);
+            statement.setString(1, menuItem.name);
+            statement.setDouble(2, menuItem.price);
+            statement.setString(3, menuItem.description);
+            statement.setBoolean(4, true);
+            statement.executeQuery();
+        }
+        catch (SQLException e) {
+            System.out.println("Could not add type to menu item");
+            success = false;
+        } 
+        return success;
+    }
     
     public static List<MenuItem> getAllMenuItems() {
         List<MenuItem> menuItems = new ArrayList();

@@ -25,23 +25,23 @@ and open the template in the editor.
             <h:form class="col s6">
                 <div class="row">
                     <div class="input-field">
-                        <h:inputText binding="#{newEmplController.emplFirstNameInput}"/>
+                        <h:inputText binding="#{createEmplController.emplFirstNameInput}"/>
                         <label for="first">First</label>
                     </div>
                     <div class="input-field">
-                        <h:inputText binding="#{newEmplController.emplLastNameInput}"/>
+                        <h:inputText binding="#{createEmplController.emplLastNameInput}"/>
                         <label for="last">Last</label>
                     </div>
                     <div class="input-field">
-                        <h:inputText binding="#{newEmplController.emplUsernameInput}"/>
+                        <h:inputText binding="#{createEmplController.emplUsernameInput}"/>
                         <label for="username">Username</label>
                     </div>
                     <div class="input-field">
-                        <h:inputSecret binding="#{newEmplController.emplPasswordInput}"/>
+                        <h:inputSecret binding="#{createEmplController.emplPasswordInput}"/>
                         <label for="password">Password</label>
                     </div>
                     <div class="input-field">
-                        <h:inputSecret validator="#{newEmplController.validateNewEmployee}"/>
+                        <h:inputSecret validator="#{createEmplController.validateNewEmployee}"/>
                         <label for="confirm">Confirm Password</label>
                     </div>
                 </div>

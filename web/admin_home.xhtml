@@ -5,12 +5,30 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
     <head>
         <title>Admin Home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"></link>
+        <link href="css/normalize.css" rel="stylesheet"></link>
+        <link href="css/main.css" rel="stylesheet"></link>
+        <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
+        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
     </head>
     <body>
-        <div>hello world</div>
+        <div class="container">
+            <h3>(Temporary) Admin Home</h3>
+            <div class="row">
+                <h:form class="col s6">
+                    <h:commandButton action="#{adminHomeController.goToCreateEmplAccount()}" 
+                                 class="waves-effect waves-light btn" value="Create Employee Account"/>
+                    <h:commandButton action="#{adminHomeController.goToEditMenuItem()}" 
+                                 class="waves-effect waves-light btn" value="Edit Mozzarella Pizza"/>
+                </h:form>
+            </div>
+        </div>
     </body>
 </html>
