@@ -60,4 +60,9 @@
             <value>#{shoppingCart}</value>
         </managed-property>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>menuController</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.menu.MenuController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 </faces-config>

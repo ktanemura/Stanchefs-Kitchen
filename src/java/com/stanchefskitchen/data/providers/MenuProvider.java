@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -41,24 +42,16 @@ public class MenuProvider {
         Map<ItemType, List<MenuItem>> menu = new LinkedHashMap<>();
         List<ItemType> itemTypes = ItemTypeProvider.getAllItemTypes();
         
-        itemTypes.forEach(type ->
-            menu.put(type, MenuItemProvider.getMenuItemsByType(type))
-        );
+        itemTypes.forEach(type -> {
+            if (type.getVisible()) {
+                List<MenuItem> menuItems = MenuItemProvider.getMenuItemsByType(type)
+                        .stream()
+                        .filter(item -> item.available)
+                        .collect(Collectors.toList());
+                menu.put(type, menuItems);
+            }
+        });
         
         return menu;
-    }
-    
-    public static void main(String[] args) {
-        Map<ItemType, List<MenuItem>> menu = getMenu();
-        
-        menu.keySet().forEach(type -> {
-            System.out.println("---------------------------");
-            System.out.println("ItemType: " + type.getName());
-            
-            menu.get(type).forEach(menuItem -> System.out.println(menuItem.name + 
-                    " costs " + String.valueOf(menuItem.price)));
-            
-            System.out.println("---------------------------");
-        });
     }
 }

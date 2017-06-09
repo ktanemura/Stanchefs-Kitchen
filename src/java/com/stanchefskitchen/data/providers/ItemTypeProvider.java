@@ -48,7 +48,8 @@ public class ItemTypeProvider {
                 results.next();
                 type = new ItemType(
                     results.getInt(ItemType.ID),
-                    results.getString(ItemType.NAME));
+                    results.getString(ItemType.NAME),
+                    results.getBoolean(ItemType.VISIBLE));
             }
             
             return type;
@@ -70,7 +71,8 @@ public class ItemTypeProvider {
                 results.next();
                 type = new ItemType(
                     results.getInt(ItemType.ID),
-                    results.getString(ItemType.NAME));
+                    results.getString(ItemType.NAME),
+                    results.getBoolean(ItemType.VISIBLE));
             }
             
             return type;
@@ -90,7 +92,9 @@ public class ItemTypeProvider {
             ResultSet results = ps.executeQuery();
             
             while (results.next()) {
-                types.add(new ItemType(results.getInt(ItemType.ID), results.getString(ItemType.NAME)));
+                types.add(new ItemType(results.getInt(ItemType.ID), 
+                        results.getString(ItemType.NAME),
+                        results.getBoolean(ItemType.VISIBLE)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ItemTypeProvider.class.getName()).log(Level.SEVERE, null, ex);
@@ -132,7 +136,8 @@ public class ItemTypeProvider {
             
             while (results.next()) {
                 itemTypes.add(new ItemType(results.getInt(ItemType.ID), 
-                        results.getString(ItemType.NAME)));
+                        results.getString(ItemType.NAME),
+                        results.getBoolean(ItemType.VISIBLE)));
             }
         }
         catch (SQLException e) {
