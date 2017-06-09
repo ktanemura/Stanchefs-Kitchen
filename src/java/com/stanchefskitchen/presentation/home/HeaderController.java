@@ -24,10 +24,9 @@ public class HeaderController implements Serializable {
     }
     
     public String getLoggedInInfo() {
-        return "hello, monica";
-//        Account account = userSession.getAccount();
-//        this.loggedInInfo = String.format(LOGGED_IN_INFO, account.firstName, 
-//                account.lastName);
-//        return loggedInInfo;
+        Account account = userSession.getAccount();
+        this.loggedInInfo = String.format(LOGGED_IN_INFO, account.firstName, 
+                account.lastName);
+        return loggedInInfo;
     }
 }
