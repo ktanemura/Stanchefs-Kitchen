@@ -45,7 +45,7 @@ public class AddMenuItemController {
             itemTypeId = itemType.getId();
         }
         
-        if (!MenuItemProvider.addMenuItemType(menuItem, new MenuItemType(itemName, itemTypeId))) {
+        if (!MenuItemProvider.addType(menuItem, new MenuItemType(itemName, itemTypeId))) {
             // throw error
         }
     }
