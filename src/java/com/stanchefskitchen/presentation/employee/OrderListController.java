@@ -21,7 +21,7 @@ public class OrderListController {
     private UIInput customerFirstName;
     private UIInput customerLastName;
     
-    public List<Order> getOrders() {
+    public List<Order> getOrdersList() {
         ordersList = OrderProvider.getIncompleteOrders();
         return ordersList;
     }
