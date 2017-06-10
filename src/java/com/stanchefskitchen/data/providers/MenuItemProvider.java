@@ -51,10 +51,10 @@ public class MenuItemProvider {
             statement.setDouble(2, menuItem.price);
             statement.setString(3, menuItem.description);
             statement.setBoolean(4, true);
-            statement.executeQuery();
+            statement.executeUpdate();
         }
         catch (SQLException e) {
-            System.out.println("Could not add type to menu item");
+            System.out.println("Could not add menu item: "+e.toString());
             success = false;
         } 
         return success;
@@ -194,7 +194,7 @@ public class MenuItemProvider {
         return success;
     }
     
-    public static boolean addType(MenuItem menuItem, 
+    public static boolean addMenuItemType(MenuItem menuItem, 
             MenuItemType menuItemType) {
         boolean success = true;
         try {
@@ -211,7 +211,7 @@ public class MenuItemProvider {
         return success;
     }
     
-    public static boolean removeType(MenuItem menuItem, 
+    public static boolean removeMenuItemType(MenuItem menuItem, 
             MenuItemType menuItemType) {
         boolean success = true;
         try {
@@ -222,7 +222,7 @@ public class MenuItemProvider {
             statement.executeQuery();
         }
         catch (SQLException e) {
-            System.out.println("Could not remove type from menu item");
+            System.out.println("Could not remove type from menu item: "+e.toString());
             success = false;
         } 
         return success;

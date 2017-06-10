@@ -28,15 +28,35 @@ public class ItemTypeProvider {
     private static final String ALL_ITEM_TYPES = "select * from ItemType;";
     private static final String GET_TYPE_ID = "select * from ItemType where id = ?;";
     private static final String GET_TYPE_NAME = "select * from ItemType where name = ?;";
-    private static final String GET_MENUITEM_TYPES = "select i.id, i.name "
-            + "from ItemType i join MenuItem m "
-            + "on m.itemTypeId = i.id where m.name = ?;";
+    private static final String GET_MENUITEM_TYPES = "select t.id, t.name, t.visible "
+            + "from ItemType t, MenuItemType i, MenuItem m "
+            + "WHERE t.id = i.itemTypeId AND i.menuItem = m.name AND m.name = ?;";
     private static final String GET_MENUITEMS_TYPE = "select m.name, m.price, m.description from "
             + "MenuItem m left join MenuItemType mi on m.name = mi.menuItem "
             + "where not(m.name = null) and mi.itemTypeId = ?;";
     private static final String ADD_TYPE = "insert into ItemType(name) values(?);";
     private static final String UPDATE_TYPE = "update ItemType set name = ? where id = ?;";
     private static final String DELETE_TYPE = "delete from ItemType where id = ?;";
+    
+    public static List<ItemType> getMenuItemType(String menuItem) {
+        ArrayList<ItemType> types= new ArrayList<ItemType>();
+        
+        try {
+            PreparedStatement ps = connection.prepareStatement(GET_MENUITEM_TYPES);
+            ps.setString(1, menuItem);
+            ResultSet results = ps.executeQuery();
+            
+            while (results.next()) {
+                types.add(new ItemType(results.getInt(ItemType.ID), 
+                        results.getString(ItemType.NAME),
+                        results.getBoolean(ItemType.VISIBLE)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ItemTypeProvider.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return types;
+    }
     
     public static ItemType getTypeById(int itemTypeId) {
         ItemType type = null;
@@ -78,30 +98,8 @@ public class ItemTypeProvider {
             
             return type;
         } catch (SQLException ex) {
-            Logger.getLogger(ItemTypeProvider.class.getName()).log(Level.SEVERE, null, ex);
+            return type;
         }
-        
-        return type;
-    }
-    
-    public static List<ItemType> getMenuItemType(String menuItem) {
-        ArrayList<ItemType> types= new ArrayList<ItemType>();
-        
-        try {
-            PreparedStatement ps = connection.prepareStatement(GET_MENUITEM_TYPES);
-            ps.setString(1, menuItem);
-            ResultSet results = ps.executeQuery();
-            
-            while (results.next()) {
-                types.add(new ItemType(results.getInt(ItemType.ID), 
-                        results.getString(ItemType.NAME),
-                        results.getBoolean(ItemType.VISIBLE)));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ItemTypeProvider.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return types;
     }
     
     public static List<MenuItem> getMenuItemsOfType(List<String> allowedTypes) {

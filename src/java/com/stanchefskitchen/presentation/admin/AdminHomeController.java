@@ -6,6 +6,7 @@
 package com.stanchefskitchen.presentation.admin;
 
 import com.stanchefskitchen.data.models.MenuItem;
+import com.stanchefskitchen.data.providers.ItemTypeProvider;
 import com.stanchefskitchen.data.providers.MenuItemProvider;
 import java.util.*;
 

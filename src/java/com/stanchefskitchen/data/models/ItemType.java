@@ -24,6 +24,13 @@ public class ItemType {
         this.visible = visible;
     }
 
+    public String getVisibleString() {
+        if (visible) {
+            return "Yes";
+        }
+        return "No";
+    }
+    
     public int getId() {
         return id;
     }

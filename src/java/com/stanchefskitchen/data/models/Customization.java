@@ -46,17 +46,4 @@ public class Customization {
         this.description = description;
         this.price = price;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-    
 }

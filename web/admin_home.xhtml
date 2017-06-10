@@ -23,10 +23,18 @@ and open the template in the editor.
             <h3>(Temporary) Admin Home</h3>
             <div class="row">
                 <h:form class="col s6">
-                    <h:commandButton action="#{adminHomeController.goToCreateEmplAccount()}" 
+                    <div class="row">
+                        <h:commandButton action="#{adminHomeController.goToCreateEmplAccount()}" 
                                  class="waves-effect waves-light btn" value="Create Employee Account"/>
-                    <h:commandButton action="#{adminHomeController.goToEditMenuItem()}" 
+                    </div>
+                    <div class="row">
+                        <h:commandButton action="#{adminHomeController.goToAddMenuItem()}" 
+                                     class="waves-effect waves-light btn" value="Add Menu Item"/>
+                    </div>
+                    <div class="row">
+                        <h:commandButton action="#{adminHomeController.goToEditMenuItem()}" 
                                  class="waves-effect waves-light btn" value="Edit Mozzarella Pizza"/>
+                    </div>
                 </h:form>
             </div>
         </div>
