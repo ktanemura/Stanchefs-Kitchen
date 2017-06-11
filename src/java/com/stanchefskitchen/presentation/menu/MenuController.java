@@ -4,6 +4,7 @@ import com.stanchefskitchen.data.models.ItemType;
 import com.stanchefskitchen.data.models.MenuItem;
 import com.stanchefskitchen.data.providers.MenuProvider;
 import com.stanchefskitchen.presentation.NavController;
+import com.stanchefskitchen.presentation.admin.EditMenuItemController;
 import com.stanchefskitchen.presentation.cart.AddItemController;
 import com.stanchefskitchen.presentation.login.Session;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class MenuController {
     public Map<ItemType, List<MenuItem>> menuMap = MenuProvider.getMenu();
     private Session userSession;
     private AddItemController addItemController;
+    private EditMenuItemController editMenuItemController;
     public String actionLabel = "";
     
     public List<ItemType> getItemTypes() {
@@ -61,12 +63,21 @@ public class MenuController {
         this.addItemController = addItemController;
     }
     
+    public EditMenuItemController getEditMenuItemController() {
+        return editMenuItemController;
+    }
+
+    public void setEditMenuItemController(EditMenuItemController editMenuItemController) {
+        this.editMenuItemController = editMenuItemController;
+    }
+    
     public String fireAction(MenuItem item) {
         String nextPage = "";
         if (userSession != null && userSession.getAccount() != null) {
             switch(userSession.getAccount().type) {
                 case admin:
-                    actionLabel = "Edit Item";
+                    editMenuItemController.setMenuItem(item);
+                    nextPage = NavController.EDIT_ITEM;
                     break;
                 case customer:
                     addItemController.setCurrentMenuItem(item);

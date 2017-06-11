@@ -46,36 +46,8 @@
                         <label for="confirm">Confirm Password</label>
                     </div>
                     <div class="input-field">
-                        <h:inputText id="email" binding="#{signupController.emailInput}"/>
+                        <h:inputText id="email" validator="#{signupController.validateInputs}"/>
                         <label for="email">E-mail</label>
-                    </div>
-                    <div class="input-field">
-                        <h:inputText id="address" binding="#{signupController.addressInput}"/>
-                        <label for="address">Address</label>
-                    </div>
-                    <div class="input-field">
-                        <h:inputText id="city" binding="#{signupController.cityInput}"/>
-                        <label for="city">City</label>
-                    </div>
-                    <div class="input-field">
-                        <h:inputText id="state" binding="#{signupController.stateInput}"/>
-                        <label for="state">State</label>
-                    </div>
-                    <div class="input-field">
-                        <h:inputText id="zip" binding="#{signupController.zipInput}"/>
-                        <label for="zip">Zip Code</label>
-                    </div>
-                    <div class="input-field">
-                        <h:inputText id="card-num" binding="#{signupController.cardNumInput}"/>
-                        <label for="card-num">Card Number</label>
-                    </div>
-                    <div class="input-field">
-                        <h:inputText id="expiration" binding="#{signupController.expInput}"/>
-                        <label for="expiration">Expiration</label>
-                    </div>
-                    <div class="input-field">
-                        <h:inputText id="crc" validator="#{signupController.validateInputs}"/>
-                        <label for="crc">CRC</label>
                     </div>
                 </div>
                 <br></br>
