@@ -5,11 +5,13 @@
  */
 package com.stanchefskitchen.presentation.employee;
 
+import com.stanchefskitchen.data.models.AccountType;
 import com.stanchefskitchen.data.models.Bill;
 import com.stanchefskitchen.data.models.Order;
 import com.stanchefskitchen.data.models.OrderItem;
 import com.stanchefskitchen.data.providers.BillProvider;
 import com.stanchefskitchen.data.providers.OrderProvider;
+import com.stanchefskitchen.presentation.login.Session;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,17 @@ public class OrderDetailsController {
     private Bill bill;
     private List<OrderItem> items;
     private boolean check = false;
+    private Session userSession;
+
+    public Session getUserSession() {
+        return userSession;
+    }
+
+    public void setUserSession(Session userSession) {
+        this.userSession = userSession;
+    }
+    
+    
     
     public String details(Order o) {
         orderId = o.id;
@@ -33,7 +46,7 @@ public class OrderDetailsController {
     }
     
     public boolean isPayAvailable() {
-        return !bill.paid;
+        return !bill.paid && userSession.getAccount().type.equals(AccountType.employee);
     }
     
     public String payBill() {
@@ -52,8 +65,11 @@ public class OrderDetailsController {
     
     public String billTotal() {
         String total = "Total: $%.2f";
-        double billTotal = bill.price;
+        if (bill != null) {
+            double billTotal = bill.price;
         
-        return String.format(total, billTotal);
+            return String.format(total, billTotal);
+        }
+        return null;
     }
 }
