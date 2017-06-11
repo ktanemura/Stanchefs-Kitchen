@@ -3,6 +3,8 @@ package com.stanchefskitchen.presentation.menu;
 import com.stanchefskitchen.data.models.ItemType;
 import com.stanchefskitchen.data.models.MenuItem;
 import com.stanchefskitchen.data.providers.MenuProvider;
+import com.stanchefskitchen.presentation.NavController;
+import com.stanchefskitchen.presentation.cart.AddItemController;
 import com.stanchefskitchen.presentation.login.Session;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.Map;
 public class MenuController {
     public Map<ItemType, List<MenuItem>> menuMap = MenuProvider.getMenu();
     private Session userSession;
+    private AddItemController addItemController;
     public String actionLabel = "";
     
     public List<ItemType> getItemTypes() {
@@ -26,21 +29,54 @@ public class MenuController {
     }
     
     public String getActionLabel() {
-        switch(userSession.getAccount().type) {
-            case admin:
-                actionLabel = "Edit Item";
-                break;
-            case customer:
-                actionLabel = "Add Item";
-                break;
-            default:
-                break;
+        if (userSession != null && userSession.getAccount() != null) {
+            switch(userSession.getAccount().type) {
+                case admin:
+                    actionLabel = "Edit Item";
+                    break;
+                case customer:
+                    actionLabel = "Add Item";
+                    break;
+                default:
+                    break;
+            }
         }
         
         return actionLabel;
     }
     
+    public Session getUserSession() {
+        return userSession;
+    }
+
+    public void setUserSession(Session userSession) {
+        this.userSession = userSession;
+    }
+    
+    public AddItemController getAddItemController() {
+        return addItemController;
+    }
+
+    public void setAddItemController(AddItemController addItemController) {
+        this.addItemController = addItemController;
+    }
+    
     public String fireAction(MenuItem item) {
-        return "";
+        String nextPage = "";
+        if (userSession != null && userSession.getAccount() != null) {
+            switch(userSession.getAccount().type) {
+                case admin:
+                    actionLabel = "Edit Item";
+                    break;
+                case customer:
+                    addItemController.setCurrentMenuItem(item);
+                    nextPage = NavController.ADD_ITEM;
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        return nextPage;
     }
 }

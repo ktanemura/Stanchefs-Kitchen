@@ -87,6 +87,10 @@
             <property-name>userSession</property-name>
             <value>#{userSession}</value>
         </managed-property>
+        <managed-property>
+            <property-name>addItemController</property-name>
+            <value>#{addItemController}</value>
+        </managed-property>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>cardController</managed-bean-name>
