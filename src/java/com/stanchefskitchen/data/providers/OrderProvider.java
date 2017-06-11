@@ -23,11 +23,11 @@ import java.util.*;
 public class OrderProvider {
     private static Connection connection = DatabaseProvider.getConnection();
     
-    private static final String INCOMP_ORDERS = "SELECT * FROM order WHERE status != ?";
+    private static final String INCOMP_ORDERS = "SELECT * FROM orders WHERE status != ?";
     private static final String ORDERITEM_BY_ID = "SELECT * FROM orderitem WHERE orderId = ?";
     private static final String CUSTOM_BY_ID = "SELECT * FROM orderItemCustomization WHERE orderId = ?";
-    private static final String ORDER_BY_CUSTOMER = "SELECT * FROM order WHERE customerId = ?";
-    private static final String INSERT_ORDER = "INSERT INTO order (customerId, billId, isDelivery) VALUES (?,?, ?)";
+    private static final String ORDER_BY_CUSTOMER = "SELECT * FROM orders WHERE customerId = ?";
+    private static final String INSERT_ORDER = "INSERT INTO orders (customerId, billId, isDelivery) VALUES (?,?, ?)";
     private static final String INSERT_ITEM = "INSERT INTO orderItem (orderId, itemName, quantity) " +
             "VALUES (?,?,?)";
     private static final String INSERT_CUSTOM = "INSERT INTO orderItemCustomization VALUES (?,?)";
