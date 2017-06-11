@@ -135,9 +135,9 @@ public class AddCreditCardController {
         
         CreditCard card = new CreditCard(cardNum, accountId, Integer.valueOf(crc), 
                 address, parseDate(expiration));
-        int cardId = CreditCardProvider.addCardToAccount(accountId, card);
+        boolean success = CreditCardProvider.addCardToAccount(accountId, card);
         
-        if (cardId > 0) {
+        if (success) {
             return NavController.CREDIT_CARD;
         }
         else {

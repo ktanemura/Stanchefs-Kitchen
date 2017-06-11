@@ -26,6 +26,7 @@ public class ItemTypeProvider {
     private static Connection connection = DatabaseProvider.getConnection();
     
     private static final String ALL_ITEM_TYPES = "select * from ItemType;";
+    private static final String ALL_VISIBLE_ITEM_TYPES = "select * from ItemType WHERE visible = true;";
     private static final String GET_TYPE_ID = "select * from ItemType where id = ?;";
     private static final String GET_TYPE_NAME = "select * from ItemType where name = ?;";
     private static final String GET_MENUITEM_TYPES = "select t.id, t.name, t.visible "
@@ -131,6 +132,26 @@ public class ItemTypeProvider {
         
         try {
             PreparedStatement statement = connection.prepareStatement(ALL_ITEM_TYPES);
+            ResultSet results = statement.executeQuery();
+            
+            while (results.next()) {
+                itemTypes.add(new ItemType(results.getInt(ItemType.ID), 
+                        results.getString(ItemType.NAME),
+                        results.getBoolean(ItemType.VISIBLE)));
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Could not get item types");
+        }
+        
+        return itemTypes;
+    }
+    
+    public static List<ItemType> getAllVisibleItemTypes() {
+        List<ItemType> itemTypes = new ArrayList<>();
+        
+        try {
+            PreparedStatement statement = connection.prepareStatement(ALL_VISIBLE_ITEM_TYPES);
             ResultSet results = statement.executeQuery();
             
             while (results.next()) {
