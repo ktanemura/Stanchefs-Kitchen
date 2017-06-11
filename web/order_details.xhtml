@@ -26,11 +26,11 @@ and open the template in the editor.
                              class="centered striped" border="1">
                     <h:column>
                         <f:facet name="header">Item</f:facet>
-                        #{item.itemName}
+                        #{item.getItemName()}
                     </h:column>
                     <h:column>
                         <f:facet name="header">Quantity</f:facet>
-                        #{item.quantity}
+                        #{item.getQuantity()}
                     </h:column>
                 </h:dataTable>
             </div>

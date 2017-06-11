@@ -17,4 +17,46 @@ public class Order {
         this.orderStatus = orderStatus;
         this.isDelivery = isDelivery;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public int getBillId() {
+        return billId;
+    }
+
+    public void setBillId(int billId) {
+        this.billId = billId;
+    }
+
+    public boolean isIsDelivery() {
+        return isDelivery;
+    }
+
+    public void setIsDelivery(boolean isDelivery) {
+        this.isDelivery = isDelivery;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+    
+    
 }
