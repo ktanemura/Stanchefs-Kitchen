@@ -39,10 +39,7 @@ public class EditMenuItemController implements Serializable  {
     public void addMenuItemType() { 
         if (!MenuItemProvider.addMenuItemType(menuItem, 
                 new MenuItemType(menuItem.name, selectedTypeId))) {
-            FacesMessage msg = new FacesMessage("Item is already of that type",
-                        "Item is already of that type");
-                msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-                throw new ValidatorException(msg);
+            
         }
     }
     
