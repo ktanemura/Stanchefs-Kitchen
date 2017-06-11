@@ -7,7 +7,7 @@
     <head>
         <title>Checkout | Stanchef's Kitchen</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-         <!-- CSS -->
+        <!-- CSS -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"></link>
         <link href="css/normalize.css" rel="stylesheet"></link>
@@ -20,7 +20,7 @@
         <div class="container">
             <h4>Checkout</h4>
             <h5>Complete the form to finalize you order!</h5>
-            
+
             <h6>Total: #{shoppingCart.stringTotal}</h6>
             <h:form>
                 <h:selectOneRadio value="#{checkoutController.pickUp}" onchange="submit()">
@@ -53,6 +53,13 @@
                     <f:selectItem itemValue="true" itemLabel="Use existing card"/>
                     <f:selectItem itemValue="false" itemLabel="Add new card"/>
                 </h:selectOneRadio>
+                <div class="container" style="display:#{((not checkoutController.payAtStore) and checkoutController.useExistingCard)?'block':'none'}">
+                    <h6>Choose a Credit Card</h6>
+                    <h:selectOneMenu value="#{checkoutController.selectedCreditCard}">
+                        <f:selectItems value="#{checkoutController.creditCards}" 
+                                       var="itemType" itemValue="#{itemType.number}" itemLabel="#{itemType.safeNumber}"/>
+                    </h:selectOneMenu>
+                </div>
                 <div class="row" style="display:#{((not checkoutController.payAtStore) and (not checkoutController.useExistingCard))?'block':'none'}">
                     <div class="input-field">
                         <h:inputText id="card-num" binding="#{checkoutController.cardNumInput}"/>

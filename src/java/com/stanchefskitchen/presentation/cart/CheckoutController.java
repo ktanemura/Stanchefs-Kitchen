@@ -1,6 +1,12 @@
 package com.stanchefskitchen.presentation.cart;
 
+import com.stanchefskitchen.data.models.CreditCard;
+import com.stanchefskitchen.data.providers.CreditCardProvider;
 import com.stanchefskitchen.presentation.NavController;
+import com.stanchefskitchen.presentation.login.Session;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -33,6 +39,7 @@ public class CheckoutController {
     private static final String FAILED_SIGNUP = "Could not signup";
 
     private ShoppingCartController shoppingCart;
+    private Session userSession;
     private boolean pickUp;
     private boolean payAtStore;
     private boolean useExistingCard;
@@ -50,7 +57,7 @@ public class CheckoutController {
     private String cardZipcode = "";
     private String email = "";
     private String phoneNumber = "";
-    
+
     private UIInput emailInput;
     private UIInput phoneNumberInput;
     private UIInput addressInput;
@@ -64,6 +71,8 @@ public class CheckoutController {
     private UIInput cardCityInput;
     private UIInput cardStateInput;
     private UIInput cardZipInput;
+    private String selectedCreditCard;
+    private List<CreditCard> creditCards;
 
     /**
      * Creates a new instance of CheckoutController
@@ -72,61 +81,75 @@ public class CheckoutController {
         this.pickUp = true;
         this.payAtStore = true;
         this.useExistingCard = true;
+        this.creditCards = new ArrayList();
     }
 
     public ShoppingCartController getShoppingCart() {
         return shoppingCart;
     }
 
+    public List<CreditCard> getCreditCards() {
+        if (userSession.getAccount() != null && creditCards.isEmpty()) {
+            creditCards = CreditCardProvider.getCardsByAccountId(userSession
+                    .getAccount().id);
+        } 
+        return creditCards;
+    }
+
     public boolean finishDisabled() {
         if (pickUp) {
             if (payAtStore) {
                 return email.isEmpty() || phoneNumber.isEmpty();
+            } else if (useExistingCard) {
+                return creditCards.isEmpty();
+            } else {
+                return cardNum.isEmpty() || crcCode.isEmpty()
+                        || cardExp.isEmpty() || cardAddress.isEmpty()
+                        || cardCity.isEmpty() || cardState.isEmpty()
+                        || cardZipcode.isEmpty();
             }
-            else {
-                if (useExistingCard) {
-                    // TODO
-                    return true;
-                }
-                else {
-                    return cardNum.isEmpty() || crcCode.isEmpty() || 
-                            cardExp.isEmpty() || cardAddress.isEmpty() || 
-                            cardCity.isEmpty() || cardState.isEmpty() || 
-                            cardZipcode.isEmpty();
-                }
-            }
-        }
-        else {
-            if (address.isEmpty() || city.isEmpty() || state.isEmpty() 
+        } else {
+            if (address.isEmpty() || city.isEmpty() || state.isEmpty()
                     || zipcode.isEmpty()) {
                 return true;
             }
             if (payAtStore) {
                 return email.isEmpty() || phoneNumber.isEmpty();
-            }
-            else {
-                if (useExistingCard) {
-                    // TODO
-                    return true;
-                }
-                else {
-                    return cardNum.isEmpty() || crcCode.isEmpty() || 
-                            cardExp.isEmpty() || cardAddress.isEmpty() || 
-                            cardCity.isEmpty() || cardState.isEmpty() || 
-                            cardZipcode.isEmpty();
-                }
+            } else if (useExistingCard) {
+                return creditCards.isEmpty();
+            } else {
+                return cardNum.isEmpty() || crcCode.isEmpty()
+                        || cardExp.isEmpty() || cardAddress.isEmpty()
+                        || cardCity.isEmpty() || cardState.isEmpty()
+                        || cardZipcode.isEmpty();
             }
         }
     }
 
     public String finishOrder() {
         if (completeForm) {
+            // add a new card if needed
+            if (!payAtStore && !useExistingCard && userSession.getAccount() != null) {
+                CreditCardProvider.addCardToAccount(userSession.getAccount().id,
+                        new CreditCard(cardNum, userSession.getAccount().id, 
+                                Integer.valueOf(crcCode), cardAddress, 
+                                parseDate(cardExp)));
+            }
+            // create order and bill
             shoppingCart.clearCart();
             return NavController.CUS_HOME;
         }
         return "";
     }
 
+    private Date parseDate(String dateString) {
+        String[] dateFields = dateString.split("/");
+        int month = Integer.valueOf(dateFields[0]);
+        int day = Integer.valueOf(dateFields[1]);
+        int year = Integer.valueOf(dateFields[2]);
+        return Date.valueOf(year + "-" + month + "-" + day);
+    }
+    
     public String payAtStoreDeliveryPerson() {
         return pickUp ? "Pay At Store" : "Pay Delivery Person";
     }
@@ -137,21 +160,21 @@ public class CheckoutController {
 
     public void validateInputs(FacesContext context, UIComponent component,
             Object value) throws ValidatorException {
-        
-        email = emailInput.getLocalValue().toString().replaceAll(WHITE_SPACE,"");
+
+        email = emailInput.getLocalValue().toString().replaceAll(WHITE_SPACE, "");
         phoneNumber = ((String) value).replaceAll(WHITE_SPACE, "");
-        address = addressInput.getLocalValue().toString().replaceAll(WHITE_SPACE,"");
-        city = cityInput.getLocalValue().toString().replaceAll(WHITE_SPACE,"");
-        state = stateInput.getLocalValue().toString().replaceAll(WHITE_SPACE,"");
-        zipcode = zipInput.getLocalValue().toString().replaceAll(WHITE_SPACE,"");
-        cardNum = cardNumInput.getLocalValue().toString().replaceAll(WHITE_SPACE,"");
-        crcCode = crcInput.getLocalValue().toString().replaceAll(WHITE_SPACE,"");
-        cardExp = expInput.getLocalValue().toString().replaceAll(WHITE_SPACE,"");
-        cardAddress = cardAddressInput.getLocalValue().toString().replaceAll(WHITE_SPACE,"");
-        cardCity = cardCityInput.getLocalValue().toString().replaceAll(WHITE_SPACE,"");
-        cardState = cardStateInput.getLocalValue().toString().replaceAll(WHITE_SPACE,"");
-        cardZipcode = cardZipInput.getLocalValue().toString().replaceAll(WHITE_SPACE,"");
-        
+        address = addressInput.getLocalValue().toString().replaceAll(WHITE_SPACE, "");
+        city = cityInput.getLocalValue().toString().replaceAll(WHITE_SPACE, "");
+        state = stateInput.getLocalValue().toString().replaceAll(WHITE_SPACE, "");
+        zipcode = zipInput.getLocalValue().toString().replaceAll(WHITE_SPACE, "");
+        cardNum = cardNumInput.getLocalValue().toString().replaceAll(WHITE_SPACE, "");
+        crcCode = crcInput.getLocalValue().toString().replaceAll(WHITE_SPACE, "");
+        cardExp = expInput.getLocalValue().toString().replaceAll(WHITE_SPACE, "");
+        cardAddress = cardAddressInput.getLocalValue().toString().replaceAll(WHITE_SPACE, "");
+        cardCity = cardCityInput.getLocalValue().toString().replaceAll(WHITE_SPACE, "");
+        cardState = cardStateInput.getLocalValue().toString().replaceAll(WHITE_SPACE, "");
+        cardZipcode = cardZipInput.getLocalValue().toString().replaceAll(WHITE_SPACE, "");
+
         if (!finishDisabled()) {
 
             if (email.isEmpty()) {
@@ -240,7 +263,7 @@ public class CheckoutController {
                     msg.setSeverity(FacesMessage.SEVERITY_ERROR);
                     throw new ValidatorException(msg);
                 }
-                
+
                 if (cardAddress.isEmpty()) {
                     FacesMessage msg = new FacesMessage(ADDRESS_EMPTY_ERROR, FAILED_SIGNUP);
                     msg.setSeverity(FacesMessage.SEVERITY_ERROR);
@@ -505,6 +528,22 @@ public class CheckoutController {
 
     public void setCardZipInput(UIInput cardZipInput) {
         this.cardZipInput = cardZipInput;
+    }
+
+    public Session getUserSession() {
+        return userSession;
+    }
+
+    public void setUserSession(Session userSession) {
+        this.userSession = userSession;
+    }
+
+    public String getSelectedCreditCard() {
+        return selectedCreditCard;
+    }
+
+    public void setSelectedCreditCard(String selectedCreditCard) {
+        this.selectedCreditCard = selectedCreditCard;
     }
 
 }
