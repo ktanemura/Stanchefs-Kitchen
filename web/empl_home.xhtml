@@ -24,7 +24,7 @@
                              class="centered striped" border="1">
                     <h:column>
                         <f:facet name="header">Customer Id</f:facet>
-                        #{o.customerId}
+                        #{emplOrderController.getCustomer(o.customerId)}
                     </h:column>
                     <h:column>
                         <f:facet name="header">Bill Id</f:facet>
@@ -47,23 +47,14 @@
                     </h:column>
                     <h:column>
                         <h:form>
-                            <h:commandLink value="#{emplOrderController.getCookingValue(o)}"
-                                           disabled="#{!emplOrderController.isCookingAvailable(o)}"
-                                           action="#{emplOrderController.setOrderCooking(o)}"/>
+                            <h:commandLink value="#{emplOrderController.getAdvanceValue(o)}"
+                                           action="#{emplOrderController.advanceOrder(o)}"/>
                         </h:form>
                     </h:column>
                     <h:column>
                         <h:form>
-                            <h:commandLink value="#{emplOrderController.getOrderReadyValue(o)}"
-                                           disabled="#{!emplOrderController.isReadyAvailable(o)}"
-                                           action="#{emplOrderController.setOrderReady(o)}"/>
-                        </h:form>
-                    </h:column>
-                    <h:column>
-                        <h:form>
-                            <h:commandLink value="#{emplOrderController.getCompleteValue(o)}"
-                                           disabled="#{!emplOrderController.isReadyAvailable(o)}"
-                                           action="#{emplOrderController.setOrderReady(o)}"/>
+                            <h:commandLink value="#{emplOrderController.getDetailsValue()}"
+                                           action="#{emplOrderController.getOrderDetails(o)}"/>
                         </h:form>
                     </h:column>
                 </h:dataTable>

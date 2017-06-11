@@ -21,7 +21,7 @@ public class BillProvider {
     private static Connection connection = DatabaseProvider.getConnection();
     private static final String GET_BILL = "select * from bill where id = ?;";
     private static final String CREATE_BILL = "insert into bill(employeeId, total) values (?, ?);";
-    
+    private static final String PAY_BILL = "update bill set isPaid = TRUE where bill.id = ?;";
     public static Bill get_bill(int id) {
         Bill b = null;
         
@@ -48,5 +48,16 @@ public class BillProvider {
         } catch (SQLException ex) {
             Logger.getLogger(BillProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static void set_paid(int billId) {
+        try {
+            PreparedStatement s = connection.prepareStatement(PAY_BILL);
+            s.setInt(1, billId);
+            s.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BillProvider.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 }
