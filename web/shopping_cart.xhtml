@@ -50,8 +50,8 @@
 
                     <h:outputLabel class="col s2" value="Total" style="margin-bottom: 12px; margin-top: 12px;"/>
                     <h:outputText class="col s10" value="#{shoppingCart.stringTotal}" style="margin-bottom: 12px; margin-top: 12px;"/>
-                    <h:commandButton class="col s12"value="Clear shopping cart" class="waves-effect waves-light btn" action="#{shoppingCart.clearCart()}"/>
-                    <h:commandButton class="col s12"value="Checkout" class="waves-effect waves-light btn" disabled="#{shoppingCart.isEmpty()}" action="#{shoppingCart.checkout()}"/>
+                    <h:commandButton class="col s12" value="Clear shopping cart" class="waves-effect waves-light other btn" action="#{shoppingCart.clearCart()}"/>
+                    <h:commandButton class="col s12" value="Checkout" class="waves-effect waves-light btn" disabled="#{shoppingCart.isEmpty()}" action="#{shoppingCart.checkout()}"/>
                 </div>
             </h:form>
         </div>
