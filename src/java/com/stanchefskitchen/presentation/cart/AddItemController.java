@@ -31,11 +31,8 @@ public class AddItemController implements Serializable {
      * Creates a new instance of AddItemController
      */
     public AddItemController() {
-        this.currentMenuItem = new MenuItem("Chicken bacon ranch flatbread pizza",
-                4.99, "It has bacon. What more can you ask for.", true);
         this.customizations = new ArrayList();
         this.selectedCustomizations = new HashMap();
-        setCurrentMenuItem(currentMenuItem);
     }
 
     public MenuItem getCurrentMenuItem() {
@@ -52,7 +49,7 @@ public class AddItemController implements Serializable {
             }
         }
         shoppingCart.addItem(orderItem);
-        return NavController.SHOPPING_CART;
+        return NavController.CUS_HOME;
     }
 
     public void validateQuantity(FacesContext context,

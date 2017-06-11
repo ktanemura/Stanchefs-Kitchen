@@ -1,7 +1,10 @@
 package com.stanchefskitchen.presentation.cart;
 
+import com.stanchefskitchen.data.models.AccountType;
 import com.stanchefskitchen.data.models.CreditCard;
+import com.stanchefskitchen.data.providers.BillProvider;
 import com.stanchefskitchen.data.providers.CreditCardProvider;
+import com.stanchefskitchen.data.providers.OrderProvider;
 import com.stanchefskitchen.presentation.NavController;
 import com.stanchefskitchen.presentation.login.Session;
 import java.sql.Date;
@@ -141,8 +144,15 @@ public class CheckoutController {
                                 parseDate(cardExp)));
             }
             // create order and bill
+            int billId = BillProvider.create_bill(userSession.getAccount().type == AccountType.employee ? userSession.getAccount().id : -1, shoppingCart.getTotal());
+            int orderId = OrderProvider.placeOrder(userSession.getAccount().id, billId, !pickUp).id;
+            List<CartOrderItem> items = shoppingCart.getOrderItems();
+            for (CartOrderItem item : items) {
+                OrderProvider.addOrderItem(orderId, item.menuItem.name, item.quantity);
+            }
             shoppingCart.clearCart();
-            return NavController.CUS_HOME;
+            creditCards.clear();
+            return NavController.ORDER_RECEIVED;
         }
         return "";
     }
