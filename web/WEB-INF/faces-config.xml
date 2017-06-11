@@ -68,6 +68,10 @@
             <property-name>userSession</property-name>
             <value>#{userSession}</value>
         </managed-property>
+        <managed-property>
+            <property-name>detailsController</property-name>
+            <value>#{detailsController}</value>
+        </managed-property>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>shoppingCart</managed-bean-name>
