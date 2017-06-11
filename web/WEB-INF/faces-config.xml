@@ -56,6 +56,11 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
+        <managed-bean-name>editCustomizationController</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.admin.EditCustomizationController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
         <managed-bean-name>emplOrderController</managed-bean-name>
         <managed-bean-class>com.stanchefskitchen.presentation.employee.OrderListController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
