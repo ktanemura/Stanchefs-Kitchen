@@ -36,7 +36,7 @@ and open the template in the editor.
             </div>
             <h:outputText value="#{orderDetailsController.billTotal()}"></h:outputText>
             <h:form>
-                <h:commandButton class="waves-effect waves-light btn" 
+                <h:commandButton class="waves-effect waves-light btn red lighten-1" 
                                  disabled="#{!orderDetailsController.payEnabled()}"
                                  value="Set paid" 
                                  action="#{orderDetailsController.payBill()}"/>

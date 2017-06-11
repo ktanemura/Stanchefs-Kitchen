@@ -13,3 +13,30 @@ html {
 .rightalign {
     text-align: right;
 }
+
+.input-field label {
+    color: #000;
+}
+/* label focus color */
+.input-field input[type=text]:focus + label {
+    color: #ea454b;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid #ea454b;
+    box-shadow: 0 1px 0 0 #ea454b;
+}
+/* valid color */
+.input-field input[type=text].valid {
+    border-bottom: 1px solid #ea454b;
+    box-shadow: 0 1px 0 0 #ea454b;
+}
+/* invalid color */
+.input-field input[type=text].invalid {
+    border-bottom: 1px solid #ea454b;
+    box-shadow: 0 1px 0 0 #ea454b;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+    color: #ea454b;
+}

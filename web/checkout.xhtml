@@ -7,7 +7,7 @@
     <head>
         <title>Checkout | Stanchef's Kitchen</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-         <!-- CSS -->
+        <!-- CSS -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"></link>
         <link href="css/normalize.css" rel="stylesheet"></link>
@@ -18,7 +18,10 @@
     <body>
         <ui:include src="customer_shopping_cart_header.xhtml"/>
         <div class="container">
-            <h3>Checkout</h3>
+            <h4>Checkout</h4>
+            <h5>Complete the form to finalize you order!</h5>
+
+            <h6>Total: #{shoppingCart.stringTotal}</h6>
             <h:form>
                 <h:selectOneRadio value="#{checkoutController.pickUp}" onchange="submit()">
                     <f:selectItem itemValue="true" itemLabel="Store Pick Up"/>
@@ -26,19 +29,19 @@
                 </h:selectOneRadio>
                 <div class="row" style="display:#{(checkoutController.pickUp)?'none':'block'}">
                     <div class="input-field">
-                        <h:inputText id="address" value="#{checkoutController.address}"/>
-                        <label for="address">Address</label>
+                        <h:inputText id="address" binding="#{checkoutController.addressInput}"/>
+                        <label for="address">Delivery Address</label>
                     </div>
                     <div class="input-field">
-                        <h:inputText id="city" value="#{checkoutController.city}"/>
+                        <h:inputText id="city" binding="#{checkoutController.cityInput}"/>
                         <label for="city">City</label>
                     </div>
                     <div class="input-field">
-                        <h:inputText id="state" value="#{checkoutController.state}"/>
+                        <h:inputText id="state" binding="#{checkoutController.stateInput}"/>
                         <label for="state">State</label>
                     </div>
                     <div class="input-field">
-                        <h:inputText id="zip" value="#{checkoutController.zipcode}"/>
+                        <h:inputText id="zip" binding="#{checkoutController.zipInput}"/>
                         <label for="zip">Zip Code</label>
                     </div>
                 </div>
@@ -50,31 +53,54 @@
                     <f:selectItem itemValue="true" itemLabel="Use existing card"/>
                     <f:selectItem itemValue="false" itemLabel="Add new card"/>
                 </h:selectOneRadio>
-                <div class="row" style="display:#{(checkoutController.useExistingCard)?'none':'block'}">
+                <div class="container" style="display:#{((not checkoutController.payAtStore) and checkoutController.useExistingCard)?'block':'none'}">
+                    <h6>Choose a Credit Card</h6>
+                    <h:selectOneMenu value="#{checkoutController.selectedCreditCard}">
+                        <f:selectItems value="#{checkoutController.creditCards}" 
+                                       var="itemType" itemValue="#{itemType.number}" itemLabel="#{itemType.safeNumber}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="row" style="display:#{((not checkoutController.payAtStore) and (not checkoutController.useExistingCard))?'block':'none'}">
                     <div class="input-field">
-                        <h:inputText id="card-num" value="#{checkoutController.cardNum}"/>
+                        <h:inputText id="card-num" binding="#{checkoutController.cardNumInput}"/>
                         <label for="card-num">Card Number</label>
                     </div>
                     <div class="input-field">
-                        <h:inputText id="expiration" value="#{checkoutController.cardExp}"/>
+                        <h:inputText id="expiration" binding="#{checkoutController.expInput}"/>
                         <label for="expiration">Expiration</label>
                     </div>
                     <div class="input-field">
-                        <h:inputText id="crc" value="#{checkoutController.crcCode}"/>
+                        <h:inputText id="crc" binding="#{checkoutController.crcInput}"/>
                         <label for="crc">CRC</label>
+                    </div>
+                    <div class="input-field">
+                        <h:inputText id="card-address" binding="#{checkoutController.cardAddressInput}"/>
+                        <label for="address">Card Address</label>
+                    </div>
+                    <div class="input-field">
+                        <h:inputText id="card-city" binding="#{checkoutController.cardCityInput}"/>
+                        <label for="city">City</label>
+                    </div>
+                    <div class="input-field">
+                        <h:inputText id="card-state" binding="#{checkoutController.cardStateInput}"/>
+                        <label for="state">State</label>
+                    </div>
+                    <div class="input-field">
+                        <h:inputText id="card-zip" binding="#{checkoutController.cardZipInput}"/>
+                        <label for="zip">Zip Code</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field">
-                        <h:inputText id="email" value="#{checkoutController.email}"/>
+                        <h:inputText id="email" binding="#{checkoutController.emailInput}"/>
                         <label for="card-num">Email</label>
                     </div>
                     <div class="input-field">
-                        <h:inputText id="phone-num" value="#{checkoutController.phoneNumber}"/>
+                        <h:inputText id="phone-num" binding="#{checkoutController.phoneNumberInput}" validator="#{checkoutController.validateInputs}"/>
                         <label for="expiration">Phone Number</label>
                     </div>
                 </div>
-                <h:commandButton value="Finish Order" class="waves-effect waves-light btn" disabled="#{checkoutController.finishOrderDisabled()}" action="#{checkoutController.finishOrder()}"/>
+                <h:commandButton value="Finish Order" class="waves-effect waves-light btn red lighten-1" action="#{checkoutController.finishOrder()}" />
             </h:form>
         </div>
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

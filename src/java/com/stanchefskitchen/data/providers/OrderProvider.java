@@ -118,19 +118,20 @@ public class OrderProvider {
      * @param billId
      * @return Order object with the id created
      */
-    public static Order placeOrder(int customerId, int billId, boolean isReady) {
+    public static Order placeOrder(int customerId, int billId, boolean isDelivery) {
         try {
             PreparedStatement statement = connection.prepareStatement(INSERT_ORDER);
             statement.setInt(1, customerId);
             statement.setInt(2, billId);
-            statement.setBoolean(3, isReady);
+            statement.setBoolean(3, isDelivery);
             statement.executeUpdate();
             
             ResultSet generatedKeys = statement.getGeneratedKeys();
             generatedKeys.next();
             int newId = generatedKeys.getInt(1);
             
-            return new Order(newId, customerId, billId, isReady, OrderStatus.RECEIVED);
+            return new Order(newId, customerId, billId, isDelivery, 
+                    OrderStatus.RECEIVED);
         }
         catch (SQLException e) {
             System.out.println("Error placing order: "+e.toString());

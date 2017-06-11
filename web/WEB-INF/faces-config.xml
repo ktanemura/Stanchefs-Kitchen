@@ -130,6 +130,10 @@
             <property-name>shoppingCart</property-name>
             <value>#{shoppingCart}</value>
         </managed-property>
+        <managed-property>
+            <property-name>userSession</property-name>
+            <value>#{userSession}</value>
+        </managed-property>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>orderDetailsController</managed-bean-name>
