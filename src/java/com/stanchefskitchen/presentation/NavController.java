@@ -20,6 +20,7 @@ public class NavController implements Serializable {
     public static final String ADD_CARD = "add_credit_card";
     public static final String CREDIT_CARD = "credit_card";
     public static final String CHECKOUT = "checkout";
+    public static final String CUS_ORDERS = "cus_orders";
     
     private Session userSession;
     
@@ -45,6 +46,10 @@ public class NavController implements Serializable {
     
     public String goToCreateAccount() {
         return SIGNUP;
+    }
+    
+    public String goToCustomerOrders() {
+        return CUS_ORDERS;
     }
     
     public String goToMenu() {
