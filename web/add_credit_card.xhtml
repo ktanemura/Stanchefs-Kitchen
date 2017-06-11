@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="theme-color" content="#009688" />
+
+        <!-- MOBILE -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+
+        <title>Add Credit Card | Stanchef's Kitchen</title>
+
+        <!-- CSS -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"></link>
+        <link href="css/normalize.css" rel="stylesheet"></link>
+        <link href="css/main.css" rel="stylesheet"></link>
+        <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
+        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
+        <link href="css/material.datepicker.css" rel="stylesheet" type="text/css"></link>
+    </head>
+    <body>
+        <div class="container row">
+            <h3>Add a New Credit Card</h3>
+            <h:form class="col s12">
+                <div class="row">
+                    <div class="input-field">
+                        <h:inputText id="address" binding="#{addCardController.addressInput}"/>
+                        <label for="address">Address</label>
+                    </div>
+                    <div class="input-field">
+                        <h:inputText id="card-num" binding="#{addCardController.cardNumInput}"/>
+                        <label for="card-num">Card Number</label>
+                    </div>
+                    <div class="input-field">
+                        <h:inputText id="expiration" binding="#{addCardController.expInput}"/>
+                        <label for="expiration">Expiration</label>
+                    </div>
+                    <div class="input-field">
+                        <h:inputText id="crc" validator="#{addCardController.validateInputs}"/>
+                        <label for="crc">CRC</label>
+                    </div>
+                </div>
+                <br></br>
+                <h:commandButton action="#{addCardController.addCard}" id="create-account-button" class="waves-effect waves-light btn" value="Add Card"/>
+            </h:form>
+        </div>
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+    </body>
+</html>

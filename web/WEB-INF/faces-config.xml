@@ -83,5 +83,27 @@
         <managed-bean-name>menuController</managed-bean-name>
         <managed-bean-class>com.stanchefskitchen.presentation.menu.MenuController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>userSession</property-name>
+            <value>#{userSession}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>cardController</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.customer.CreditCardController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>userSession</property-name>
+            <value>#{userSession}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>addCardController</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.customer.AddCreditCardController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>userSession</property-name>
+            <value>#{userSession}</value>
+        </managed-property>
     </managed-bean>
 </faces-config>

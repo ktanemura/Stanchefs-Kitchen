@@ -30,6 +30,19 @@ public class CreditCard {
     public String getNumber() {
         return number;
     }
+    
+    public String getSafeNumber() {
+        String safeNumber = "";
+        for (int index = 0; index < number.length(); index++) {
+            if (index < number.length() - 4) {
+                safeNumber += "*";
+            }
+            else {
+                safeNumber += number.charAt(index);
+            }
+        }
+        return safeNumber;
+    }
 
     public int getCustomerId() {
         return customerId;
