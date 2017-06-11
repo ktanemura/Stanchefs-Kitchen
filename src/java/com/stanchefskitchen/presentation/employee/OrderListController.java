@@ -5,8 +5,10 @@
  */
 package com.stanchefskitchen.presentation.employee;
 
+import com.stanchefskitchen.data.models.Account;
 import com.stanchefskitchen.data.models.Order;
 import com.stanchefskitchen.data.models.OrderStatus;
+import com.stanchefskitchen.data.providers.AccountProvider;
 import com.stanchefskitchen.data.providers.OrderProvider;
 import com.stanchefskitchen.presentation.login.Session;
 import java.util.List;
@@ -66,6 +68,11 @@ public class OrderListController {
     
     public String getCusOrderDetails(Order o) {
         return orderDetailsController.cusDetails(o);
+    }
+    
+    public String getCustomer(int id) {
+        Account a = AccountProvider.getAccountById(id);
+        return a.firstName + " " + a.lastName;
     }
     
     /*

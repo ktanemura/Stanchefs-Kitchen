@@ -23,7 +23,7 @@ import java.util.*;
 public class OrderProvider {
     private static Connection connection = DatabaseProvider.getConnection();
     
-    private static final String INCOMP_ORDERS = "SELECT * FROM orders WHERE status <> ? and status <> ?;";
+    private static final String INCOMP_ORDERS = "SELECT * FROM orders WHERE status <> 'cancelled' and status <> 'completed';";
     private static final String ORDERITEM_BY_ID = "SELECT * FROM orderitem WHERE orderId = ?;";
     private static final String CUSTOM_BY_ID = "SELECT * FROM orderItemCustomization WHERE orderId = ?;";
     private static final String ORDER_BY_CUSTOMER = "SELECT * FROM orders WHERE customerId = ?;";
@@ -35,10 +35,7 @@ public class OrderProvider {
     
     public static ArrayList<Order> getIncompleteOrders() {
         try {
-            PreparedStatement statement = connection.prepareStatement(INCOMP_ORDERS);
-            statement.setString(1, statusToString(OrderStatus.COMPLETE));
-            statement.setString(2, statusToString(OrderStatus.CANCELLED));
-            ResultSet results = statement.executeQuery();
+            ResultSet results = connection.createStatement().executeQuery(INCOMP_ORDERS);
             
             ArrayList<Order> orders = new ArrayList<>();
             while (results.next()) {
