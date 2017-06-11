@@ -1,33 +1,35 @@
 package com.stanchefskitchen.presentation.menu;
 
+import com.stanchefskitchen.data.models.AccountType;
 import com.stanchefskitchen.data.models.ItemType;
 import com.stanchefskitchen.data.models.MenuItem;
-import com.stanchefskitchen.data.providers.MenuProvider;
+import com.stanchefskitchen.data.providers.ItemTypeProvider;
+import com.stanchefskitchen.data.providers.MenuItemProvider;
 import com.stanchefskitchen.presentation.NavController;
 import com.stanchefskitchen.presentation.admin.EditMenuItemController;
 import com.stanchefskitchen.presentation.cart.AddItemController;
 import com.stanchefskitchen.presentation.login.Session;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
  * @author Tyler Wong
  */
 public class MenuController {
-    public Map<ItemType, List<MenuItem>> menuMap = MenuProvider.getMenu();
     private Session userSession;
     private AddItemController addItemController;
     private EditMenuItemController editMenuItemController;
     public String actionLabel = "";
     
     public List<ItemType> getItemTypes() {
-        return new ArrayList<>(menuMap.keySet());
+        if (userSession.getAccount().type == AccountType.admin) {
+            return ItemTypeProvider.getAllItemTypes();
+        }
+        return ItemTypeProvider.getAllVisibleItemTypes();
     }
     
     public List<MenuItem> getMenuItemsByItemType(ItemType itemType) {
-        return menuMap.get(itemType);
+        return MenuItemProvider.getMenuItemsByType(itemType);
     }
     
     public String getActionLabel() {

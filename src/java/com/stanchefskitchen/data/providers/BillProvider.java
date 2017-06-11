@@ -39,15 +39,23 @@ public class BillProvider {
         return b;
     }
     
-    public static void create_bill(int employeeId, double total) {
+    public static int create_bill(int employeeId, double total) {
+        int id = -1;
         try {
             PreparedStatement s = connection.prepareStatement(CREATE_BILL);
             s.setInt(1, employeeId);
             s.setDouble(2, total);
             s.executeUpdate();
+            ResultSet r = s.getGeneratedKeys();
+            
+            if (r.next()) {
+                id = r.getInt(Bill.ID);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(BillProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        return id;
     }
     
     public static void set_paid(int billId) {

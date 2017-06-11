@@ -131,5 +131,9 @@
         <managed-bean-name>orderDetailsController</managed-bean-name>
         <managed-bean-class>com.stanchefskitchen.presentation.employee.OrderDetailsController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>userSession</property-name>
+            <value>#{userSession}</value>
+        </managed-property>
     </managed-bean>
 </faces-config>

@@ -15,10 +15,7 @@ public class CreditCardController {
     public List<CreditCard> creditCards;
     
     public List<CreditCard> getCreditCards() {
-        if (creditCards == null) {
-            creditCards = CreditCardProvider.getCardsByAccountId(userSession.getAccount().id);
-        }
-        return creditCards;
+        return CreditCardProvider.getCardsByAccountId(userSession.getAccount().id);
     }
     
     public String deleteCard(CreditCard card) {

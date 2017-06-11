@@ -20,16 +20,5 @@
         <ui:include src="menu.xhtml"/>
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
-        <h:dataTable value="#{emplOrderController.customerOrders}" var="o"
-                             class="centered striped" border="1">
-            <h:column>
-                <f:facet name="header">Is Delivery</f:facet>
-                        #{o.isDelivery}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Order Status</f:facet>
-                        #{o.orderStatus}
-            </h:column>
-        </h:dataTable>
     </body>
 </html>

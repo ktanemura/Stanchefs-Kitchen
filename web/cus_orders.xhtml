@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
-        <title>Employee Home | StanChef's Kitchen</title>
+        <title>My Orders</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
@@ -16,39 +21,25 @@
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
     </head>
     <body>
-        <ui:include src="empl_home_header.xhtml"/>
+        <ui:include src="customer_shopping_cart_header.xhtml"/>
         <div class="container">
-            <h3>Orders In Progress</h3>
+            <h3>My Orders</h3>
             <div class="row">
-                <h:dataTable value="#{emplOrderController.ordersList}" var="o"
-                             class="centered striped" border="1">
-                    <h:column>
-                        <f:facet name="header">Customer Id</f:facet>
-                        #{emplOrderController.getCustomer(o.customerId)}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Bill Id</f:facet>
-                        #{o.billId}
-                    </h:column>
+                <h:dataTable value="#{emplOrderController.customerOrders}" var="o"
+                                     class="centered striped" border="1">
                     <h:column>
                         <f:facet name="header">Is Delivery</f:facet>
-                        #{o.isDelivery}
+                                #{o.isDelivery}
                     </h:column>
                     <h:column>
                         <f:facet name="header">Order Status</f:facet>
-                        #{o.orderStatus}
+                                #{o.orderStatus}
                     </h:column>
                     <h:column>
                         <h:form>
                             <h:commandLink value="#{emplOrderController.getCancelValue(o)}"
                                            disabled="#{!emplOrderController.isCancelAvailable(o)}"
                                            action="#{emplOrderController.cancelOrder(o)}"/>
-                        </h:form>
-                    </h:column>
-                    <h:column>
-                        <h:form>
-                            <h:commandLink value="#{emplOrderController.getAdvanceValue(o)}"
-                                           action="#{emplOrderController.advanceOrder(o)}"/>
                         </h:form>
                     </h:column>
                     <h:column>
@@ -60,8 +51,5 @@
                 </h:dataTable>
             </div>
         </div>
-        
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script type="text/javascript" src="js/materialize.min.js"></script>
     </body>
 </html>

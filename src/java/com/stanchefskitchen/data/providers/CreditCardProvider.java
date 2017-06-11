@@ -20,13 +20,12 @@ public class CreditCardProvider {
             + "WHERE customerId = %d";
     private static final String INSERT_NEW_CARD = "INSERT INTO creditcard(number, "
             + "customerid, crc, address, expdate) VALUES(?, ?, ?, ?, ?);";
-    private static final String REMOVE_CARD = "DELETE FROM creditcard WHERE number = %s;";
+    private static final String REMOVE_CARD = "DELETE FROM creditcard WHERE number = ?;";
 
     public static List<CreditCard> getCardsByAccountId(int accountId) {
         List<CreditCard> cards = new ArrayList<>();
 
         try {
-            connection.setAutoCommit(false);
             ResultSet results = connection.createStatement().executeQuery(
                     String.format(CARDS_BY_ACCOUNT_ID, accountId));
 
@@ -40,80 +39,44 @@ public class CreditCardProvider {
         }
         catch (SQLException e) {
             System.out.println("Failed to remove credit card");
-
-            try {
-                System.out.println("Transaction is being rolled back");
-                connection.rollback();
-                connection.setAutoCommit(true);
-            }
-            catch (SQLException ex) {
-                System.out.println("Could not roll back");
-            }
         }
 
         return cards;
     }
 
-    public static int addCardToAccount(int accountId, CreditCard card) {
-        int number = -1;
+    public static boolean addCardToAccount(int accountId, CreditCard card) {
+        boolean success = false;
 
         try {
-            connection.setAutoCommit(false);
             PreparedStatement statement = connection.prepareStatement(
-                    INSERT_NEW_CARD, new String[]{CreditCard.NUMBER});
+                    INSERT_NEW_CARD);
             statement.setString(1, card.getNumber());
-            statement.setInt(2, card.getCustomerId());
+            statement.setInt(2, accountId);
             statement.setInt(3, card.getCrc());
             statement.setString(4, card.getAddress());
             statement.setDate(5, card.getExpDate());
             statement.executeUpdate();
-
-            ResultSet result = statement.getGeneratedKeys();
-
-            while (result.next()) {
-                number = result.getInt(CreditCard.NUMBER);
-            }
-
-            connection.commit();
-            connection.setAutoCommit(true);
+            success = true;
         }
         catch (SQLException e) {
             System.out.println("Failed to add credit card");
-            number = -1;
-
-            try {
-                System.out.println("Transaction is being rolled back");
-                connection.rollback();
-                connection.setAutoCommit(true);
-            }
-            catch (SQLException ex) {
-                System.out.println("Could not roll back");
-            }
         }
 
-        return number;
+        return success;
     }
 
     public static boolean removeCardFromAccount(String cardNumber) {
         boolean success = false;
 
         try {
-            connection.setAutoCommit(false);
-            connection.createStatement().executeQuery(
-                    String.format(REMOVE_CARD, cardNumber));
+            PreparedStatement statement = connection.prepareStatement(REMOVE_CARD);
+            statement.setString(1, cardNumber);
+            statement.executeUpdate();
             success = true;
         }
         catch (SQLException e) {
+            e.printStackTrace();
             System.out.println("Failed to remove credit card");
-
-            try {
-                System.out.println("Transaction is being rolled back");
-                connection.rollback();
-                connection.setAutoCommit(true);
-            }
-            catch (SQLException ex) {
-                System.out.println("Could not roll back");
-            }
         }
 
         return success;
