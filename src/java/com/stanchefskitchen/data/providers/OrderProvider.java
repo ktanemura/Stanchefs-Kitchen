@@ -31,7 +31,7 @@ public class OrderProvider {
     private static final String INSERT_ITEM = "INSERT INTO orderItem (orderId, itemName, quantity);" +
             "VALUES (?,?,?)";
     private static final String INSERT_CUSTOM = "INSERT INTO orderItemCustomization VALUES (?,?);";
-    private static final String UPDATE_STATUS = "UPDATE order SET status = ? WHERE id = ?;";
+    private static final String UPDATE_STATUS = "UPDATE orders SET status = ?::orderstatus WHERE id = ?;";
     
     public static ArrayList<Order> getIncompleteOrders() {
         try {
