@@ -5,7 +5,9 @@ import com.stanchefskitchen.data.models.ItemType;
 import com.stanchefskitchen.data.providers.MenuItemProvider;
 import com.stanchefskitchen.data.models.MenuItem;
 import com.stanchefskitchen.data.models.MenuItemType;
+import com.stanchefskitchen.data.providers.CustomizationProvider;
 import com.stanchefskitchen.data.providers.ItemTypeProvider;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +15,23 @@ import java.util.List;
  *
  * @author Ryan
  */
-public class EditMenuItemController {
+public class EditMenuItemController implements Serializable  {
     private final String ADD_MENU_ITEM = "admin_add_menuitem";
     public MenuItem menuItem;
     public int selectedTypeId;
+    public int selectedCustomId;
+
+    public int getSelectedCustomId() {
+        return selectedCustomId;
+    }
+
+    public void setSelectedCustomId(int selectedCustomId) {
+        this.selectedCustomId = selectedCustomId;
+    }
+    
+    public void addMenuItemCustomization() {
+        MenuItemProvider.addCustomization(menuItem, selectedCustomId);
+    }
     
     public void addMenuItemType() { 
         MenuItemProvider.addMenuItemType(menuItem, new MenuItemType(menuItem.name, selectedTypeId));
@@ -43,6 +58,7 @@ public class EditMenuItemController {
     }
     
     public void deleteMenuItemCustomization(Customization custom) {
+        System.out.println(custom.getId());
         MenuItemProvider.removeCustomization(menuItem, custom);
     }
 
@@ -60,6 +76,10 @@ public class EditMenuItemController {
     
     public List<ItemType> getAvailableItemTypes() {
         return ItemTypeProvider.getAllItemTypes();
+    }
+    
+    public List<Customization> getAvailableCustomizations() {
+        return CustomizationProvider.getCustomizations();
     }
     
     public List<Customization> getItemCustomizations() {

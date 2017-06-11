@@ -29,7 +29,7 @@ public class CustomizationProvider {
     private static final String ADD_CUSTOM = "INSERT INTO customization(description, price) VALUES(?, ?);";
     private static final String UPDATE_CUSTOM = "UPDATE customization SET description = ? price = ? where id = ?;";
     private static final String DELETE_CUSTOM = "DELETE FROM customization WHERE id = ?;";
-    private static final String GET_MENUITEM_CUSTOM = "SELECT i.name, i.price, i.description FROM menuitemcustomization m JOIN "
+    private static final String GET_MENUITEM_CUSTOM = "SELECT i.name, i.price, i.description, i.available FROM menuitemcustomization m JOIN "
             + "MenuItem i ON m.itemName = i.name WHERE m.customizationId = ?;";
     
     public static List<Customization> getCustomizations() {

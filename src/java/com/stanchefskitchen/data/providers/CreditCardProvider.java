@@ -20,7 +20,7 @@ public class CreditCardProvider {
             + "WHERE customerId = %d";
     private static final String INSERT_NEW_CARD = "INSERT INTO creditcard(number, "
             + "customerid, crc, address, expdate) VALUES(?, ?, ?, ?, ?);";
-    private static final String REMOVE_CARD = "DELETE FROM creditcard WHERE number = %d;";
+    private static final String REMOVE_CARD = "DELETE FROM creditcard WHERE number = %s;";
 
     public static List<CreditCard> getCardsByAccountId(int accountId) {
         List<CreditCard> cards = new ArrayList<>();
@@ -94,7 +94,7 @@ public class CreditCardProvider {
         return number;
     }
 
-    public static boolean removeCardFromAccount(int cardNumber) {
+    public static boolean removeCardFromAccount(String cardNumber) {
         boolean success = false;
 
         try {

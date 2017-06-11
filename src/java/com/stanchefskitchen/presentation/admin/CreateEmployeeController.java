@@ -8,6 +8,7 @@ package com.stanchefskitchen.presentation.admin;
 import com.stanchefskitchen.data.models.AccountType;
 import com.stanchefskitchen.data.models.Account;
 import com.stanchefskitchen.data.providers.AccountProvider;
+import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -18,7 +19,7 @@ import javax.faces.validator.ValidatorException;
  *
  * @author Ryan
  */
-public class CreateEmployeeController {
+public class CreateEmployeeController implements Serializable  {
     private static final String E_PASSWORD = "Passwords do not match";
     private static final String E_USERNAME = "Username is taken";
     private static final String CREATE_FAIL = "Employee creation failed";

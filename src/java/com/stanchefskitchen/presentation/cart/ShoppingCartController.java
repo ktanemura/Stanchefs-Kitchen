@@ -1,5 +1,7 @@
 package com.stanchefskitchen.presentation.cart;
 
+import com.stanchefskitchen.data.models.MenuItem;
+import com.stanchefskitchen.presentation.NavController;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -23,6 +25,10 @@ public class ShoppingCartController implements Serializable {
      */
     public ShoppingCartController() {
         orderItems = new ArrayList();
+        CartOrderItem cartOrderItem = new CartOrderItem(new MenuItem("Chicken bacon ranch flatbread pizza",
+                4.99, "It has bacon. What more can you ask for.", true));
+        cartOrderItem.quantity = 1;
+        addItem(cartOrderItem);
     }
     
     public boolean isEmpty() {
@@ -67,4 +73,11 @@ public class ShoppingCartController implements Serializable {
         this.orderItems = orderItems;
     }
     
+    public String checkout() {
+        return NavController.CHECKOUT;
+    }
+    
+    public void clearCart() {
+        orderItems.clear();
+    }
 }

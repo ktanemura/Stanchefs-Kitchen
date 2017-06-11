@@ -13,8 +13,12 @@ public class Customization {
     public String description;
     public double price;
 
+    public String getDisplayString() {
+        return description + " - " + getPriceString();
+    }
+    
     public String getPriceString() {
-        return String.format("%.2f", price);
+        return String.format("$%.2f", price);
     }
     
     public int getId() {

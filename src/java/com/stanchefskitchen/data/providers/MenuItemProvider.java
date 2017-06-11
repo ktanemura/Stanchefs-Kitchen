@@ -161,17 +161,17 @@ public class MenuItemProvider {
     }
     
     public static boolean addCustomization(MenuItem menuItem, 
-            Customization customization) {
+            int customizationId) {
         boolean success = true;
         try {
             PreparedStatement statement = connection
                     .prepareStatement(ADD_CUSTOM);
             statement.setString(1, menuItem.name);
-            statement.setInt(2, customization.id);
+            statement.setInt(2, customizationId);
             statement.executeQuery();
         }
         catch (SQLException e) {
-            System.out.println("Could not add customization to menu item");
+            System.out.println("Could not add customization to menu item"+e.toString());
             success = false;
         } 
         return success;
@@ -188,7 +188,7 @@ public class MenuItemProvider {
             statement.executeQuery();
         }
         catch (SQLException e) {
-            System.out.println("Could not remove customization from menu item");
+            System.out.println("Could not remove customization from menu item: "+e.toString());
             success = false;
         } 
         return success;

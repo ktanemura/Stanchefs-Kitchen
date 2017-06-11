@@ -10,13 +10,14 @@ import com.stanchefskitchen.data.models.MenuItem;
 import com.stanchefskitchen.data.models.MenuItemType;
 import com.stanchefskitchen.data.providers.ItemTypeProvider;
 import com.stanchefskitchen.data.providers.MenuItemProvider;
+import java.io.Serializable;
 import javax.faces.component.UIInput;
 
 /**
  *
  * @author Ryan
  */
-public class AddMenuItemController {
+public class AddMenuItemController implements Serializable {
     private UIInput itemNameUI;
     private UIInput priceUI;
     private UIInput descriptionUI;
