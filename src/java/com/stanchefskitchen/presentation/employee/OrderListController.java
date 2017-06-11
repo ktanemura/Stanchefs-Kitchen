@@ -24,10 +24,18 @@ public class OrderListController {
     private List<Order> customerOrders;
     private OrderDetailsController detailsController;
     
-    private Session session;
+    private Session userSession;
+
+    public Session getUserSession() {
+        return userSession;
+    }
+
+    public void setUserSession(Session userSession) {
+        this.userSession = userSession;
+    }
     
     public List<Order> getCustomerOrders() {
-        customerOrders = OrderProvider.getOrdersByCustomerId(session.getAccount().id);
+        customerOrders = OrderProvider.getOrdersByCustomerId(userSession.getAccount().id);
         return customerOrders;
     }
     

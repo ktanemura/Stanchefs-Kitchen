@@ -64,6 +64,10 @@
         <managed-bean-name>emplOrderController</managed-bean-name>
         <managed-bean-class>com.stanchefskitchen.presentation.employee.OrderListController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>userSession</property-name>
+            <value>#{userSession}</value>
+        </managed-property>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>shoppingCart</managed-bean-name>
