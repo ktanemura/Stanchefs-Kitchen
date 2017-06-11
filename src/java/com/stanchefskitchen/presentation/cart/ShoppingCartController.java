@@ -25,10 +25,6 @@ public class ShoppingCartController implements Serializable {
      */
     public ShoppingCartController() {
         orderItems = new ArrayList();
-        CartOrderItem cartOrderItem = new CartOrderItem(new MenuItem("Chicken bacon ranch flatbread pizza",
-                4.99, "It has bacon. What more can you ask for.", true));
-        cartOrderItem.quantity = 1;
-        addItem(cartOrderItem);
     }
     
     public boolean isEmpty() {
