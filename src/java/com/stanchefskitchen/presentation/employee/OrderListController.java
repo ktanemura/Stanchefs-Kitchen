@@ -22,19 +22,20 @@ public class OrderListController {
     private UIInput customerFirstName;
     private UIInput customerLastName;
     private List<Order> customerOrders;
-    private OrderDetailsController detailsController;
+    private OrderDetailsController orderDetailsController;
     
     private Session userSession;
 
-    public OrderDetailsController getDetailsController() {
-        return detailsController;
+    public OrderDetailsController getOrderDetailsController() {
+        return orderDetailsController;
     }
 
-    public void setDetailsController(OrderDetailsController detailsController) {
-        this.detailsController = detailsController;
+    public void setOrderDetailsController(OrderDetailsController orderDetailsController) {
+        this.orderDetailsController = orderDetailsController;
     }
-    
-    
+
+   
+   
 
     public Session getUserSession() {
         return userSession;
@@ -58,16 +59,9 @@ public class OrderListController {
         return "View Order Details";
     }
     
-    public OrderDetailsController getBillDetailsController() {
-        return detailsController;
-    }
-
-    public void setBillDetailsController(OrderDetailsController detailsController) {
-        this.detailsController = detailsController;
-    }
-    
     public String getOrderDetails(Order o) {
-        return detailsController.details(o);
+
+        return orderDetailsController.details(o);
     }
     
     /*

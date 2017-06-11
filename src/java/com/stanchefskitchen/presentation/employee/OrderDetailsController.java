@@ -9,6 +9,7 @@ import com.stanchefskitchen.data.models.AccountType;
 import com.stanchefskitchen.data.models.Bill;
 import com.stanchefskitchen.data.models.Order;
 import com.stanchefskitchen.data.models.OrderItem;
+import com.stanchefskitchen.data.models.OrderStatus;
 import com.stanchefskitchen.data.providers.BillProvider;
 import com.stanchefskitchen.data.providers.OrderProvider;
 import com.stanchefskitchen.presentation.login.Session;
@@ -71,5 +72,9 @@ public class OrderDetailsController {
             return String.format(total, billTotal);
         }
         return null;
+    }
+    
+    public boolean payEnabled() {
+        return order.getOrderStatus() == OrderStatus.COMPLETE && userSession.getAccount().type == AccountType.employee;
     }
 }

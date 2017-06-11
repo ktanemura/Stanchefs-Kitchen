@@ -69,8 +69,8 @@
             <value>#{userSession}</value>
         </managed-property>
         <managed-property>
-            <property-name>detailsController</property-name>
-            <value>#{detailsController}</value>
+            <property-name>orderDetailsController</property-name>
+            <value>#{orderDetailsController}</value>
         </managed-property>
     </managed-bean>
     <managed-bean>
