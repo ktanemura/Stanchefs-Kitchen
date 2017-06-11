@@ -1,8 +1,10 @@
 package com.stanchefskitchen.presentation.admin;
 
+import com.stanchefskitchen.data.models.ItemType;
 import com.stanchefskitchen.data.models.MenuItem;
 import com.stanchefskitchen.data.providers.ItemTypeProvider;
 import com.stanchefskitchen.data.providers.MenuItemProvider;
+import com.stanchefskitchen.data.providers.MenuProvider;
 import java.io.Serializable;
 import java.util.*;
 
@@ -16,6 +18,15 @@ public class AdminHomeController implements Serializable {
     private final String EDIT_CUSTOM = "admin_edit_custom";
     private final String EDIT_MENUITEM = "admin_edit_menuitem";
     private EditMenuItemController editMenuItemController;
+    
+    public Map<ItemType, List<MenuItem>> menuMap = MenuProvider.getMenu();
+    
+    public List<ItemType> getItemTypes() {
+        return new ArrayList<>(menuMap.keySet());
+    }
+    public List<MenuItem> getMenuItemsByItemType(ItemType itemType) {
+        return menuMap.get(itemType);
+    }
     
     public String goToCreateEmplAccount() {
         return EMPL_ACCOUNT;

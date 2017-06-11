@@ -20,6 +20,7 @@ and open the template in the editor.
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
     </head>
     <body>
+        <ui:include src="admin_home_header.xhtml"/>
         <div class="container">
             <h:form class="container row">
                 <h4>Edit Customizations</h4>
@@ -50,8 +51,16 @@ and open the template in the editor.
                     <h:inputText id="price" binding="#{editCustomizationController.customPrice}"/>
                         <label for="price">Price</label>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col s8">
                     <h:commandButton class="waves-effect waves-light btn" value="Create Customization"
                                      action="#{editCustomizationController.createCustomization()}"/>
+                    </div>
+                    <div class="col s4">
+                        <h:commandButton action="#{editCustomizationController.goToAdminHome()}" 
+                                     class="waves-effect waves-light btn" value="Back to Menu"/>
+                    </div>
                 </div>
             </h:form>
         </div>

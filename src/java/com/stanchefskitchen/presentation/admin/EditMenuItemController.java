@@ -17,6 +17,7 @@ import java.util.List;
  */
 public class EditMenuItemController implements Serializable  {
     private final String ADD_MENU_ITEM = "admin_add_menuitem";
+    private final String ADMIN_HOME = "admin_home";
     public MenuItem menuItem;
     public int selectedTypeId;
     public int selectedCustomId;
@@ -53,8 +54,7 @@ public class EditMenuItemController implements Serializable  {
     }
     
     public void swapVisibility(ItemType itemType) {
-        // Maybe? what is visibility?
-        
+        ItemTypeProvider.swapVisibility(selectedTypeId);
     }
     
     public void deleteMenuItemCustomization(Customization custom) {
@@ -88,5 +88,9 @@ public class EditMenuItemController implements Serializable  {
     
     public String goToAddMenuItem() {
         return ADD_MENU_ITEM;
+    }
+    
+    public String goToAdminHome() {
+        return ADMIN_HOME;
     }
 }

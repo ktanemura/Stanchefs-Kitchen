@@ -38,6 +38,19 @@ public class ItemTypeProvider {
     private static final String UPDATE_TYPE = "update ItemType set name = ? where id = ?;";
     private static final String DELETE_TYPE = "delete from ItemType where id = ?;";
     
+    private static final String SWAP_VISIBLE = "update ItemType set visible = not visible" +
+            " where id = ?";
+    
+    public static void swapVisibility(int itemTypeId) {
+        try {
+            PreparedStatement s = connection.prepareStatement(SWAP_VISIBLE);
+            s.setInt(1, itemTypeId);
+            s.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ItemTypeProvider.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public static List<ItemType> getMenuItemType(String menuItem) {
         ArrayList<ItemType> types= new ArrayList<ItemType>();
         

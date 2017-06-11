@@ -19,6 +19,11 @@ import javax.faces.component.UIInput;
 public class EditCustomizationController {
     private UIInput customDesc;
     private UIInput customPrice;
+    private final String ADMIN_HOME = "admin_home";
+    
+    public String goToAdminHome() {
+        return ADMIN_HOME;
+    }
     
     public void createCustomization() {
         String description = customDesc.getLocalValue().toString().trim();
