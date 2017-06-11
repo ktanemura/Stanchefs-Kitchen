@@ -18,6 +18,7 @@ public class NavController implements Serializable {
     public static final String SHOPPING_CART = "shopping_cart";
     public static final String ADD_ITEM = "add_order_item";
     public static final String CREDIT_CARD = "credit_card";
+    public static final String CHECKOUT = "checkout";
     
     private Session userSession;
     

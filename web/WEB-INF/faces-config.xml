@@ -106,4 +106,13 @@
             <value>#{userSession}</value>
         </managed-property>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>checkoutController</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.cart.CheckoutController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>shoppingCart</property-name>
+            <value>#{shoppingCart}</value>
+        </managed-property>
+    </managed-bean>
 </faces-config>
