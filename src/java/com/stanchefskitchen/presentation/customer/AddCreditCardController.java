@@ -27,7 +27,7 @@ public class AddCreditCardController {
     private static final String WHITE_SPACE = "\\s+";
     private static final String CARDNUM_EMPTY_ERROR = "Card number can't be empty";
     private static final String CARDNUM_INVALID_ERROR = "Card number must be only numbers";
-    private static final String DATE_FORMAT_ERROR = "Incorrect date format (MM/dd/YYYY)";
+    private static final String DATE_FORMAT_ERROR = "Incorrect date format (MM/YYYY)";
     private static final String CRC_EMPTY_ERROR = "Crc can't be empty";
     private static final String CRC_INVALID_ERROR = "Crc must only be numbers";
     private static final String ADDRESS_EMPTY_ERROR = "Address can't be empty";
@@ -93,7 +93,16 @@ public class AddCreditCardController {
             throw new ValidatorException(msg);
         }
         
-        if (expiration.split("/").length != 3) {
+        if (expiration.split("/").length != 2) {
+            FacesMessage msg = new FacesMessage(DATE_FORMAT_ERROR, FAILED_ADD_CARD);
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            throw new ValidatorException(msg);
+        }
+        
+        try {
+            parseDate(expiration);
+        }
+        catch (Exception e) {
             FacesMessage msg = new FacesMessage(DATE_FORMAT_ERROR, FAILED_ADD_CARD);
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(msg);
@@ -121,9 +130,8 @@ public class AddCreditCardController {
     private Date parseDate(String dateString) {
         String[] dateFields = dateString.split("/");
         int month = Integer.valueOf(dateFields[0]);
-        int day = Integer.valueOf(dateFields[1]);
-        int year = Integer.valueOf(dateFields[2]);
-        return Date.valueOf(year + "-" + month + "-" + day);
+        int year = Integer.valueOf(dateFields[1]);
+        return Date.valueOf(year + "-" + month + "-" + 1);
     }
     
     public String addCard() {
