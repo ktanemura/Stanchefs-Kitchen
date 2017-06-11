@@ -26,6 +26,16 @@ public class OrderListController {
     
     private Session userSession;
 
+    public OrderDetailsController getDetailsController() {
+        return detailsController;
+    }
+
+    public void setDetailsController(OrderDetailsController detailsController) {
+        this.detailsController = detailsController;
+    }
+    
+    
+
     public Session getUserSession() {
         return userSession;
     }
@@ -66,7 +76,6 @@ public class OrderListController {
     }
 */
     public boolean isCancelAvailable(Order o) {
-        ordersList.remove(o);
         return o.orderStatus == OrderStatus.RECEIVED;
     }
     
@@ -80,7 +89,7 @@ public class OrderListController {
     
     public String cancelOrder(Order o) {
         OrderProvider.changeOrderStatus(o.id, OrderStatus.CANCELLED);
-        
+        ordersList.remove(o);
         return null;
     }
 
@@ -150,11 +159,13 @@ public class OrderListController {
                 break;
             case READY:
                 OrderProvider.changeOrderStatus(o.id, OrderStatus.COMPLETE);
+                ordersList.remove(o);
                 break;
             case DELIVERING:
-                OrderProvider.changeOrderStatus(o.id, OrderStatus.COMPLETE);  
+                OrderProvider.changeOrderStatus(o.id, OrderStatus.COMPLETE); 
+                ordersList.remove(o);
+                break;
         }
-        ordersList.remove(o);
         return null;
     }
 }
