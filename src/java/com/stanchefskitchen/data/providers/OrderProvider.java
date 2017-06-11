@@ -23,7 +23,7 @@ import java.util.*;
 public class OrderProvider {
     private static Connection connection = DatabaseProvider.getConnection();
     
-    private static final String INCOMP_ORDERS = "SELECT * FROM orders WHERE not(status = ?);";
+    private static final String INCOMP_ORDERS = "SELECT * FROM orders WHERE status <> ? and status <> ?;";
     private static final String ORDERITEM_BY_ID = "SELECT * FROM orderitem WHERE orderId = ?;";
     private static final String CUSTOM_BY_ID = "SELECT * FROM orderItemCustomization WHERE orderId = ?;";
     private static final String ORDER_BY_CUSTOMER = "SELECT * FROM orders WHERE customerId = ?;";
@@ -37,6 +37,7 @@ public class OrderProvider {
         try {
             PreparedStatement statement = connection.prepareStatement(INCOMP_ORDERS);
             statement.setString(1, statusToString(OrderStatus.COMPLETE));
+            statement.setString(2, statusToString(OrderStatus.CANCELLED));
             ResultSet results = statement.executeQuery();
             
             ArrayList<Order> orders = new ArrayList<>();
@@ -81,8 +82,8 @@ public class OrderProvider {
             
             ArrayList<Order> orders = new ArrayList<>();
             while (results.next()) {
-                orders.add(new Order(results.getInt(1), results.getInt(2), 
-                        results.getInt(3), results.getBoolean(4), stringToStatus(results.getString(5))));
+                orders.add(new Order(results.getInt("id"), results.getInt("customerId"), 
+                        results.getInt("billId"), results.getBoolean("isDelivery"), stringToStatus(results.getString("status"))));
             }
             
             return orders;

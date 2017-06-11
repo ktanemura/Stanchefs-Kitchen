@@ -22,16 +22,18 @@ public class BillProvider {
     private static final String GET_BILL = "select * from bill where id = ?;";
     private static final String CREATE_BILL = "insert into bill(employeeId, total) values (?, ?);";
     private static final String PAY_BILL = "update bill set isPaid = TRUE where bill.id = ?;";
+    
     public static Bill get_bill(int id) {
         Bill b = null;
         
         try {
             PreparedStatement s = connection.prepareStatement(GET_BILL);
+            s.setInt(1, id);
             ResultSet r = s.executeQuery();
             
             if (r.next()) {
                 b = new Bill(r.getInt(Bill.ID), r.getInt(Bill.EMPL_ID),
-                        r.getDouble(Bill.PRICE), r.getDouble(Bill.TIP), r.getBoolean(Bill.PAID));
+                        r.getDouble(Bill.TOTAL), r.getDouble(Bill.TIP), r.getBoolean(Bill.PAID));
             }
         } catch (SQLException ex) {
             Logger.getLogger(BillProvider.class.getName()).log(Level.SEVERE, null, ex);

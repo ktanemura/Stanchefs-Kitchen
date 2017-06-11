@@ -12,6 +12,7 @@ public class Order {
     public OrderStatus orderStatus;
     
     public Order (int id, int customerId, int billId, boolean isDelivery, OrderStatus orderStatus) {
+        this.id = id;
         this.customerId = customerId;
         this.billId = billId;
         this.orderStatus = orderStatus;

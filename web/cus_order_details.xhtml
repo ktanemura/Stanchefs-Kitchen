@@ -19,7 +19,7 @@ and open the template in the editor.
         <title>Order Details | StanChef's Kitchen</title>
     </head>
     <body>
-        <ui:include src="empl_home_header.xhtml"/>
+        <ui:include src="customer_shopping_cart_header.xhtml"/>
         <div class ="container">
             <h3>Order Items</h3>
             <div class="row">
@@ -36,12 +36,6 @@ and open the template in the editor.
                 </h:dataTable>
             </div>
             <h:outputText value="#{orderDetailsController.billTotal()}"></h:outputText>
-            <h:form>
-                <h:commandButton class="waves-effect waves-light btn red lighten-1" 
-                                 disabled="#{!orderDetailsController.payEnabled()}"
-                                 value="Set paid" 
-                                 action="#{orderDetailsController.payBill()}"/>
-            </h:form>
         </div>
     </body>
 </html>

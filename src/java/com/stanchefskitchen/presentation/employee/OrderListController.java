@@ -64,6 +64,10 @@ public class OrderListController {
         return orderDetailsController.details(o);
     }
     
+    public String getCusOrderDetails(Order o) {
+        return orderDetailsController.cusDetails(o);
+    }
+    
     /*
     public List<Order> getSearchResults() {
         firstName =

@@ -18,7 +18,7 @@ public class Bill {
     
     public static final String ID = "id";
     public static final String EMPL_ID = "employeeId";
-    public static final String PRICE = "price";
+    public static final String TOTAL = "total";
     public static final String TIP = "tip";
     public static final String PAID = "paid";
     

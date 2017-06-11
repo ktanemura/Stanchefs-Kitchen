@@ -28,6 +28,10 @@ and open the template in the editor.
                 <h:dataTable value="#{emplOrderController.customerOrders}" var="o"
                                      class="centered striped" border="1">
                     <h:column>
+                        <f:facet name="header">Order ID</f:facet>
+                                #{o.getId()}
+                    </h:column>
+                    <h:column>
                         <f:facet name="header">Is Delivery</f:facet>
                                 #{o.isIsDelivery()}
                     </h:column>
@@ -45,7 +49,7 @@ and open the template in the editor.
                     <h:column>
                         <h:form>
                             <h:commandLink value="#{emplOrderController.getDetailsValue()}"
-                                           action="#{emplOrderController.getOrderDetails(o)}"/>
+                                           action="#{emplOrderController.getCusOrderDetails(o)}"/>
                         </h:form>
                     </h:column>
                 </h:dataTable>

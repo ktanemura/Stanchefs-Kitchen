@@ -23,7 +23,6 @@ import java.util.List;
 public class OrderDetailsController {
     private int orderId;
     private Order order;
-    private Bill bill;
     private List<OrderItem> items;
     private boolean check = false;
     private Session userSession;
@@ -42,15 +41,23 @@ public class OrderDetailsController {
         orderId = o.id;
         check = true;
         order = o;
-        bill = BillProvider.get_bill(o.billId);
         return "/order_details.xhtml?faces-redirect=true";
     }
     
+    public String cusDetails(Order o) {
+        orderId = o.id;
+        check = true;
+        order = o;
+        return "/cus_order_details.xhtml?faces-redirect=true";
+    }
+    
     public boolean isPayAvailable() {
+        Bill bill = BillProvider.get_bill(order.billId);
         return !bill.paid && userSession.getAccount().type.equals(AccountType.employee);
     }
     
     public String payBill() {
+        Bill bill = BillProvider.get_bill(order.billId);
         BillProvider.set_paid(bill.id);
         return null;
     }
@@ -66,12 +73,12 @@ public class OrderDetailsController {
     
     public String billTotal() {
         String total = "Total: $%.2f";
+        Bill bill = BillProvider.get_bill(order.billId);
         if (bill != null) {
-            double billTotal = bill.price;
-        
-            return String.format(total, billTotal);
+            return String.format(total, bill.price);
         }
-        return null;
+        
+        return String.valueOf(order.billId);
     }
     
     public boolean payEnabled() {
