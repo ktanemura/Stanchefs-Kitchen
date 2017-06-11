@@ -59,4 +59,11 @@ public class CreditCard {
     public Date getExpDate() {
         return expDate;
     }
+    
+    public String getFormattedExpDate() {
+        int year = expDate.toLocalDate().getYear();
+        int month = expDate.toLocalDate().getMonthValue();
+        
+        return month + "/" + year;
+    }
 }

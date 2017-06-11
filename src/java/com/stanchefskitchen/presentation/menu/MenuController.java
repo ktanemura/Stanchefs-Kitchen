@@ -22,7 +22,7 @@ public class MenuController {
     public String actionLabel = "";
     
     public List<ItemType> getItemTypes() {
-        if (userSession.getAccount().type == AccountType.admin) {
+        if (getActionEnabled() && userSession.getAccount().type == AccountType.admin) {
             return ItemTypeProvider.getAllItemTypes();
         }
         return ItemTypeProvider.getAllVisibleItemTypes();
@@ -55,6 +55,10 @@ public class MenuController {
 
     public void setUserSession(Session userSession) {
         this.userSession = userSession;
+    }
+    
+    public boolean getActionEnabled() {
+        return userSession != null && userSession.getAccount() != null;
     }
     
     public AddItemController getAddItemController() {
