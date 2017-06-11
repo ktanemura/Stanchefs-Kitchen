@@ -33,6 +33,10 @@ and open the template in the editor.
                         <f:facet name="header">Quantity</f:facet>
                         #{item.getQuantity()}
                     </h:column>
+                    <h:column>
+                        <f:facet name="header">Price</f:facet>
+                        #{orderDetailsController.calcPrice(item)}
+                    </h:column>
                 </h:dataTable>
             </div>
             <h:outputText value="#{orderDetailsController.billTotal()}"></h:outputText>

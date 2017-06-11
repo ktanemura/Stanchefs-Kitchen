@@ -7,10 +7,12 @@ package com.stanchefskitchen.presentation.employee;
 
 import com.stanchefskitchen.data.models.AccountType;
 import com.stanchefskitchen.data.models.Bill;
+import com.stanchefskitchen.data.models.MenuItem;
 import com.stanchefskitchen.data.models.Order;
 import com.stanchefskitchen.data.models.OrderItem;
 import com.stanchefskitchen.data.models.OrderStatus;
 import com.stanchefskitchen.data.providers.BillProvider;
+import com.stanchefskitchen.data.providers.MenuItemProvider;
 import com.stanchefskitchen.data.providers.OrderProvider;
 import com.stanchefskitchen.presentation.login.Session;
 import java.util.ArrayList;
@@ -83,5 +85,11 @@ public class OrderDetailsController {
     
     public boolean payEnabled() {
         return order.getOrderStatus() == OrderStatus.COMPLETE && userSession.getAccount().type == AccountType.employee;
+    }
+    
+    public String calcPrice(OrderItem item) {
+        MenuItem mi = MenuItemProvider.getMenuItem(item.itemName);
+        double price = mi.price * item.quantity;
+        return String.format("$%.2f", price);
     }
 }

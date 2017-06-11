@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,6 +20,8 @@ import java.util.List;
 public class MenuItemProvider {
     
     private static Connection connection = DatabaseProvider.getConnection();
+    
+    public static final String MENU_ITEM = "select * from menuitem where menuitem.name = ?;";
     
     public static final String MENU_ITEMS_BY_TYPE = "SELECT mi.name, mi.price, "
             + "mi.description, mi.available FROM menuitem mi "
@@ -58,6 +62,22 @@ public class MenuItemProvider {
             success = false;
         } 
         return success;
+    }
+    
+    public static MenuItem getMenuItem(String name) {
+        try {
+            PreparedStatement s = connection.prepareStatement(MENU_ITEM);
+            s.setString(1, name);
+            ResultSet r = s.executeQuery();
+            
+            if (r.next()) {
+                return new MenuItem(r.getString(1), r.getDouble(2), r.getString(3), r.getBoolean(4));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuItemProvider.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
     }
     
     public static List<MenuItem> getAllMenuItems() {
