@@ -22,50 +22,6 @@ and open the template in the editor.
     </head>
     <body>
         <ui:include src="admin_home_header.xhtml"/>
-        <div class="container">
-            <h3>(Temporary) Admin Home</h3>
-            <div class="row">
-                <h:form class="col s6">
-                    <div class="row">
-                        <h:commandButton action="#{adminHomeController.goToCreateEmplAccount()}" 
-                                 class="waves-effect waves-light btn" value="Create Employee Account"/>
-                    </div>
-                    <div class="row">
-                        <h:commandButton action="#{adminHomeController.goToAddMenuItem()}" 
-                                     class="waves-effect waves-light btn" value="Add Menu Item"/>
-                    </div>
-                    <div class="row">
-                        <h:commandButton action="#{adminHomeController.goToEditCustomizations()}" 
-                                     class="waves-effect waves-light btn" value="Create/Delete Customizations"/>
-                    </div>
-                    <div class="row">
-                        <h:commandButton action="#{adminHomeController.goToEditMenuItem()}" 
-                                 class="waves-effect waves-light btn" value="Edit Mozzarella Pizza"/>
-                    </div>
-                    <div class="row">
-                        <h:dataTable value="#{adminHomeController.itemTypes}" var="itemType">
-                            <h:column>
-                                <h5>#{itemType.name}</h5>
-                                <h:dataTable value="#{adminHomeController.getMenuItemsByItemType(itemType)}" var="menuItem"
-                                             class="centered striped">
-                                    <h:column>
-                                        <f:facet name="header">Name</f:facet>
-                                            #{menuItem.name}
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">Description</f:facet>
-                                            #{menuItem.description}
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">Price</f:facet>
-                                            #{menuItem.formattedPrice}
-                                    </h:column>
-                                </h:dataTable>
-                            </h:column>
-                        </h:dataTable>
-                    </div>
-                </h:form>
-            </div>
-        </div>
+        <ui:include src="menu.xhtml"/>
     </body>
 </html>

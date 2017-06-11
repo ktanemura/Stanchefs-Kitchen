@@ -97,7 +97,7 @@ public class ItemTypeProvider {
     public static ItemType getTypeByName(String name) {
         ItemType type = null;
         try {
-            PreparedStatement statement = connection.prepareStatement(GET_TYPE_ID);
+            PreparedStatement statement = connection.prepareStatement(GET_TYPE_NAME);
             statement.setString(1, name);
             ResultSet results = statement.executeQuery();
             
@@ -111,6 +111,7 @@ public class ItemTypeProvider {
             
             return type;
         } catch (SQLException ex) {
+            System.out.println("e: "+ex.toString());
             return type;
         }
     }

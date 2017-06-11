@@ -10,6 +10,8 @@ import com.stanchefskitchen.data.providers.ItemTypeProvider;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
+import javax.faces.validator.ValidatorException;
 
 /**
  *
@@ -35,7 +37,13 @@ public class EditMenuItemController implements Serializable  {
     }
     
     public void addMenuItemType() { 
-        MenuItemProvider.addMenuItemType(menuItem, new MenuItemType(menuItem.name, selectedTypeId));
+        if (!MenuItemProvider.addMenuItemType(menuItem, 
+                new MenuItemType(menuItem.name, selectedTypeId))) {
+            FacesMessage msg = new FacesMessage("Item is already of that type",
+                        "Item is already of that type");
+                msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+                throw new ValidatorException(msg);
+        }
     }
     
     public int getSelectedTypeId() {
@@ -54,7 +62,7 @@ public class EditMenuItemController implements Serializable  {
     }
     
     public void swapVisibility(ItemType itemType) {
-        ItemTypeProvider.swapVisibility(selectedTypeId);
+        ItemTypeProvider.swapVisibility(itemType.getId());
     }
     
     public void deleteMenuItemCustomization(Customization custom) {

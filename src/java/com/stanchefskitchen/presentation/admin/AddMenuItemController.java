@@ -41,8 +41,10 @@ public class AddMenuItemController implements Serializable {
         int itemTypeId;
         if (itemType == null) {
             itemTypeId = ItemTypeProvider.addItemType(itemTypeStr);
+            System.out.println(itemTypeId);
         }
         else {
+            System.out.println(itemType);
             itemTypeId = itemType.getId();
         }
         
