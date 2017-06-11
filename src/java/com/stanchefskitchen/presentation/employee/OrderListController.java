@@ -8,6 +8,7 @@ package com.stanchefskitchen.presentation.employee;
 import com.stanchefskitchen.data.models.Order;
 import com.stanchefskitchen.data.models.OrderStatus;
 import com.stanchefskitchen.data.providers.OrderProvider;
+import com.stanchefskitchen.presentation.login.Session;
 import java.util.List;
 import javax.faces.component.UIInput;
 
@@ -16,14 +17,47 @@ import javax.faces.component.UIInput;
  * @author Kyle
  */
 public class OrderListController {
-    private static List<Order> ordersList;
+    private List<Order> ordersList;
     private List<Order> searchResults;
     private UIInput customerFirstName;
     private UIInput customerLastName;
+    private List<Order> customerOrders;
+    private OrderDetailsController detailsController;
+    
+    private Session userSession;
+
+    public Session getUserSession() {
+        return userSession;
+    }
+
+    public void setUserSession(Session userSession) {
+        this.userSession = userSession;
+    }
+    
+    public List<Order> getCustomerOrders() {
+        customerOrders = OrderProvider.getOrdersByCustomerId(userSession.getAccount().id);
+        return customerOrders;
+    }
     
     public List<Order> getOrdersList() {
         ordersList = OrderProvider.getIncompleteOrders();
         return ordersList;
+    }
+    
+    public String getDetailsValue() {
+        return "View Order Details";
+    }
+    
+    public OrderDetailsController getBillDetailsController() {
+        return detailsController;
+    }
+
+    public void setBillDetailsController(OrderDetailsController detailsController) {
+        this.detailsController = detailsController;
+    }
+    
+    public String getOrderDetails(Order o) {
+        return detailsController.details(o);
     }
     
     /*
@@ -49,18 +83,11 @@ public class OrderListController {
         
         return null;
     }
-    
+
     public boolean isCookingAvailable(Order o) {
         return o.orderStatus == OrderStatus.RECEIVED;
     }
     
-    public String getCookingValue(Order o) {
-        if (isCookingAvailable(o)) {
-            return "Begin Cooking";
-        }
-        
-        return null;
-    }
     
     public String setOrderCooking(Order o) {
         OrderProvider.changeOrderStatus(o.id, OrderStatus.COOKING);
@@ -74,14 +101,13 @@ public class OrderListController {
     
     
     public String getOrderReadyValue(Order o) {
-        if (isReadyAvailable(o) && o.isDelivery) {
+        if (o.isDelivery) {
             return "Send on Delivery";
         }
-        else if (isReadyAvailable(o)){
+        else {
             return "Ready for Pickup";
         }
-        
-        return null;
+       
     }
     
     public String setOrderReady(Order o) {
@@ -99,16 +125,34 @@ public class OrderListController {
         return o.orderStatus == OrderStatus.READY ? true : o.orderStatus == OrderStatus.DELIVERING;
     }
     
-    public String getCompleteValue(Order o) {
-        if (isCompleteAvailable(o)) {
+    public String getAdvanceValue(Order o) {
+        if (isCookingAvailable(o)) {
+            return "Begin Cooking";
+        }
+        else if (isReadyAvailable(o)) {
+            return getOrderReadyValue(o);
+        }
+        else if (isCompleteAvailable(o)) {
             return "Complete Order";
         }
         
         return null;
     }
     
-    public String completeOrder(Order o) {
-        OrderProvider.changeOrderStatus(o.id, OrderStatus.COMPLETE);
+    public String advanceOrder(Order o) {
+        switch (o.orderStatus) {
+            case RECEIVED:
+                OrderProvider.changeOrderStatus(o.id, OrderStatus.COOKING);
+                break;
+            case COOKING:
+                setOrderReady(o);
+                break;
+            case READY:
+                OrderProvider.changeOrderStatus(o.id, OrderStatus.COMPLETE);
+                break;
+            case DELIVERING:
+                OrderProvider.changeOrderStatus(o.id, OrderStatus.COMPLETE);  
+        }
         ordersList.remove(o);
         return null;
     }

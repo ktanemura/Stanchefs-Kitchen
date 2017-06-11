@@ -64,6 +64,10 @@
         <managed-bean-name>emplOrderController</managed-bean-name>
         <managed-bean-class>com.stanchefskitchen.presentation.employee.OrderListController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>userSession</property-name>
+            <value>#{userSession}</value>
+        </managed-property>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>shoppingCart</managed-bean-name>
@@ -82,6 +86,50 @@
     <managed-bean>
         <managed-bean-name>menuController</managed-bean-name>
         <managed-bean-class>com.stanchefskitchen.presentation.menu.MenuController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>userSession</property-name>
+            <value>#{userSession}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>addItemController</property-name>
+            <value>#{addItemController}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>editMenuItemController</property-name>
+            <value>#{editMenuItemController}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>cardController</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.customer.CreditCardController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>userSession</property-name>
+            <value>#{userSession}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>addCardController</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.customer.AddCreditCardController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>userSession</property-name>
+            <value>#{userSession}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>checkoutController</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.cart.CheckoutController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>shoppingCart</property-name>
+            <value>#{shoppingCart}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>orderDetailsController</managed-bean-name>
+        <managed-bean-class>com.stanchefskitchen.presentation.employee.OrderDetailsController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
 </faces-config>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <title>Checkout | Stanchef's Kitchen</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+         <!-- CSS -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"></link>
+        <link href="css/normalize.css" rel="stylesheet"></link>
+        <link href="css/main.css" rel="stylesheet"></link>
+        <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
+        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
+    </head>
+    <body>
+        <ui:include src="customer_shopping_cart_header.xhtml"/>
+        <div class="container">
+            <h3>Checkout</h3>
+            <h:form>
+                <h:selectOneRadio value="#{checkoutController.pickUp}" onchange="submit()">
+                    <f:selectItem itemValue="true" itemLabel="Store Pick Up"/>
+                    <f:selectItem itemValue="false" itemLabel="Delivery"/>
+                </h:selectOneRadio>
+                <div class="row" style="display:#{(checkoutController.pickUp)?'none':'block'}">
+                    <div class="input-field">
+                        <h:inputText id="address" value="#{checkoutController.address}"/>
+                        <label for="address">Address</label>
+                    </div>
+                    <div class="input-field">
+                        <h:inputText id="city" value="#{checkoutController.city}"/>
+                        <label for="city">City</label>
+                    </div>
+                    <div class="input-field">
+                        <h:inputText id="state" value="#{checkoutController.state}"/>
+                        <label for="state">State</label>
+                    </div>
+                    <div class="input-field">
+                        <h:inputText id="zip" value="#{checkoutController.zipcode}"/>
+                        <label for="zip">Zip Code</label>
+                    </div>
+                </div>
+                <h:selectOneRadio value="#{checkoutController.payAtStore}" onchange="submit()">
+                    <f:selectItem itemValue="true" itemLabel="#{checkoutController.payAtStoreDeliveryPerson()}"/>
+                    <f:selectItem itemValue="false" itemLabel="Pay Now"/>
+                </h:selectOneRadio>
+                <h:selectOneRadio value="#{checkoutController.useExistingCard}" style="display:#{(checkoutController.payAtStore)?'none':'block'}" onchange="submit()">
+                    <f:selectItem itemValue="true" itemLabel="Use existing card"/>
+                    <f:selectItem itemValue="false" itemLabel="Add new card"/>
+                </h:selectOneRadio>
+                <div class="row" style="display:#{(checkoutController.useExistingCard)?'none':'block'}">
+                    <div class="input-field">
+                        <h:inputText id="card-num" value="#{checkoutController.cardNum}"/>
+                        <label for="card-num">Card Number</label>
+                    </div>
+                    <div class="input-field">
+                        <h:inputText id="expiration" value="#{checkoutController.cardExp}"/>
+                        <label for="expiration">Expiration</label>
+                    </div>
+                    <div class="input-field">
+                        <h:inputText id="crc" value="#{checkoutController.crcCode}"/>
+                        <label for="crc">CRC</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <h:inputText id="email" value="#{checkoutController.email}"/>
+                        <label for="card-num">Email</label>
+                    </div>
+                    <div class="input-field">
+                        <h:inputText id="phone-num" value="#{checkoutController.phoneNumber}"/>
+                        <label for="expiration">Phone Number</label>
+                    </div>
+                </div>
+                <h:commandButton value="Finish Order" class="waves-effect waves-light btn" disabled="#{checkoutController.finishOrderDisabled()}" action="#{checkoutController.finishOrder()}"/>
+            </h:form>
+        </div>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+    </body>
+</html>

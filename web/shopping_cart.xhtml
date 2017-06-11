@@ -5,7 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
-        <title>Shopping Cart</title>
+        <title>Shopping Cart | Stanchef's Kitchen</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <!-- CSS -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
@@ -50,7 +50,7 @@
 
                     <h:outputLabel class="col s2" value="Total" style="margin-bottom: 12px; margin-top: 12px;"/>
                     <h:outputText class="col s10" value="#{shoppingCart.stringTotal}" style="margin-bottom: 12px; margin-top: 12px;"/>
-                    <h:commandButton value="Checkout" class="waves-effect waves-light btn" disabled="#{shoppingCart.isEmpty()}"/>
+                    <h:commandButton value="Checkout" class="waves-effect waves-light btn" disabled="#{shoppingCart.isEmpty()}" action="#{shoppingCart.checkout()}"/>
                 </div>
             </h:form>
         </div>

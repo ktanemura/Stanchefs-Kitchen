@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="theme-color" content="#009688" />
+
+        <!-- MOBILE -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+
+        <title>My Credit Cards | The ACME Hotel</title>
+
+        <!-- CSS -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"></link>
+        <link href="css/normalize.css" rel="stylesheet"></link>
+        <link href="css/main.css" rel="stylesheet"></link>
+        <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
+        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
+    </h:head>
+    <h:body>
+        <ui:include src="customer_shopping_cart_header.xhtml"/>
+        <div class="container">
+            <h3>My Credit Cards</h3>
+            <div class="row">
+                <h:dataTable value="#{cardController.getCreditCards()}" var="card"
+                             class="centered striped">
+                    <h:column>
+                        <f:facet name="header">Card Number</f:facet>
+                            #{card.safeNumber}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Expiration</f:facet>
+                            #{card.expDate.toLocalDate().toString()}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Address</f:facet>
+                            #{card.address}
+                    </h:column>
+                    <h:column>
+                        <h:form>
+                            <h:commandLink value="Remove"
+                                           action="#{cardController.deleteCard(card)}"/>
+                        </h:form>
+                    </h:column>
+                </h:dataTable>
+            </div>
+            <h:form>
+                <h:commandButton value="Add Card" class="waves-effect waves-light btn" action="#{cardController.addCard()}"/>
+            </h:form>
+        </div>
+    </h:body>
+</html>
