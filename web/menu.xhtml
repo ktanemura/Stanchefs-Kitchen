@@ -24,7 +24,7 @@
                             <f:facet name="header">Price</f:facet>
                                 #{menuItem.formattedPrice}
                         </h:column>
-                        <h:column>
+                        <h:column rendered="#{menuController.actionEnabled}">
                             <h:form>
                                 <h:commandLink value="#{menuController.actionLabel}"
                                                action="#{menuController.fireAction(menuItem)}"/>
