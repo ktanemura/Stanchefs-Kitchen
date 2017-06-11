@@ -19,7 +19,7 @@ public class MenuController {
     public Map<ItemType, List<MenuItem>> menuMap = MenuProvider.getMenu();
     private Session userSession;
     private AddItemController addItemController;
-    private EditMenuItemController editItemController;
+    private EditMenuItemController editMenuItemController;
     public String actionLabel = "";
     
     public List<ItemType> getItemTypes() {
@@ -63,12 +63,12 @@ public class MenuController {
         this.addItemController = addItemController;
     }
     
-    public EditMenuItemController getEditItemController() {
-        return editItemController;
+    public EditMenuItemController getEditMenuItemController() {
+        return editMenuItemController;
     }
 
-    public void setEditItemController(EditMenuItemController editItemController) {
-        this.editItemController = editItemController;
+    public void setEditMenuItemController(EditMenuItemController editMenuItemController) {
+        this.editMenuItemController = editMenuItemController;
     }
     
     public String fireAction(MenuItem item) {
@@ -76,7 +76,7 @@ public class MenuController {
         if (userSession != null && userSession.getAccount() != null) {
             switch(userSession.getAccount().type) {
                 case admin:
-                    editItemController.setMenuItem(item);
+                    editMenuItemController.setMenuItem(item);
                     nextPage = NavController.EDIT_ITEM;
                     break;
                 case customer:
