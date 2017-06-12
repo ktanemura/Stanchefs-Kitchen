@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <head>
         <title>Order Received!</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -14,6 +15,7 @@
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"></link>
     </head>
     <body>
+        <ui:include src="customer_shopping_cart_header.xhtml"/>
         <div class="container">
             <h3>Your order has been received!</h3>
             <h:form>
