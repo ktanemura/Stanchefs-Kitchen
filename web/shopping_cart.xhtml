@@ -51,10 +51,10 @@
                     <h:outputLabel class="col s2" value="Total" style="margin-bottom: 12px; margin-top: 12px;"/>
                     <h:outputText class="col s10" value="#{shoppingCart.stringTotal}" style="margin-bottom: 12px; margin-top: 12px;"/>
                     <div class="col s12">
-                        <h:commandButton value="Clear shopping cart" class="waves-effect waves-light btn" action="#{shoppingCart.clearCart()}"/>
+                        <h:commandButton value="Clear shopping cart" class="waves-effect waves-light btn red lighten-1" action="#{shoppingCart.clearCart()}"/>
                     </div>
                     <div class="col s12" style="padding-top: 12px;">
-                        <h:commandButton value="Checkout" class="waves-effect waves-light btn" disabled="#{shoppingCart.isEmpty()}" action="#{shoppingCart.checkout()}"/>
+                        <h:commandButton value="Checkout" class="waves-effect waves-light btn red lighten-1" disabled="#{shoppingCart.isEmpty()}" action="#{shoppingCart.checkout()}"/>
                     </div>       
                 </div>
             </h:form>
