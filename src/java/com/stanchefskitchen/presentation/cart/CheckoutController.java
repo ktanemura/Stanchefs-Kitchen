@@ -2,6 +2,8 @@ package com.stanchefskitchen.presentation.cart;
 
 import com.stanchefskitchen.data.models.AccountType;
 import com.stanchefskitchen.data.models.CreditCard;
+import com.stanchefskitchen.data.models.Customization;
+import com.stanchefskitchen.data.models.OrderItem;
 import com.stanchefskitchen.data.providers.BillProvider;
 import com.stanchefskitchen.data.providers.CreditCardProvider;
 import com.stanchefskitchen.data.providers.OrderProvider;
@@ -146,9 +148,18 @@ public class CheckoutController {
             // create order and bill
             int billId = BillProvider.create_bill(userSession.getAccount().type == AccountType.employee ? userSession.getAccount().id : -1, shoppingCart.getTotal());
             int orderId = OrderProvider.placeOrder(userSession.getAccount().id, billId, !pickUp).id;
+            // add order items
             List<CartOrderItem> items = shoppingCart.getOrderItems();
             for (CartOrderItem item : items) {
-                OrderProvider.addOrderItem(orderId, item.menuItem.name, item.quantity);
+                int orderItemId = OrderProvider.addOrderItem(orderId, item.menuItem.name, item.quantity).id;
+                // add customizations
+                for (Customization cus : item.customizations) {
+                    OrderProvider.addOrderCustomization(orderItemId, cus.id);
+                }
+            }
+            // set delivery address if needed
+            if (!pickUp) {
+                OrderProvider.addOrderAddress(orderId, address, city, state, zipcode);
             }
             shoppingCart.clearCart();
             creditCards.clear();

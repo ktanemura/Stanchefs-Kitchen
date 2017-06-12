@@ -26,7 +26,10 @@ public class MenuItemProvider {
     public static final String MENU_ITEMS_BY_TYPE = "SELECT mi.name, mi.price, "
             + "mi.description, mi.available FROM menuitem mi "
             + "JOIN menuitemtype mit ON mi.name = mit.menuitem WHERE mit.itemtypeid = %d;";
-    public static final String GET_CUSTOMIZATIONS = "SELECT c.id, c.description"
+    public static final String GET_CUSTOMIZATIONS_WITH_MENU_CUSTOMIZATION_ID = "SELECT m.id, c.description"
+            + ", c.price FROM menuitemcustomization m, customization c WHERE it"
+            + "emname = ? AND c.id = m.customizationid;";
+     public static final String GET_CUSTOMIZATIONS = "SELECT c.id, c.description"
             + ", c.price FROM menuitemcustomization m, customization c WHERE it"
             + "emname = ? AND c.id = m.customizationid;";
     public static final String GET_TYPES = "SELECT id, name FROM menuitemty"
@@ -145,6 +148,26 @@ public class MenuItemProvider {
         try {
             PreparedStatement statement = connection
                     .prepareStatement(GET_CUSTOMIZATIONS);
+            statement.setString(1, menuItem.name);
+            ResultSet results = statement.executeQuery();
+            while (results.next()) {
+                customizations.add(
+                        new Customization(results.getInt(Customization.ID), 
+                        results.getString(Customization.DESCRIPTION), 
+                        results.getDouble(Customization.PRICE)));
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Could not get customizations");
+        }     
+        return customizations;
+    }
+    
+    public static List<Customization> getCustomizationsWithMenuCustomizationId(MenuItem menuItem) {
+        List<Customization> customizations = new ArrayList();
+        try {
+            PreparedStatement statement = connection
+                    .prepareStatement(GET_CUSTOMIZATIONS_WITH_MENU_CUSTOMIZATION_ID);
             statement.setString(1, menuItem.name);
             ResultSet results = statement.executeQuery();
             while (results.next()) {

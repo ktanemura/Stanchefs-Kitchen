@@ -76,7 +76,7 @@ public class AddItemController implements Serializable {
         this.selectedCustomizations = new HashMap();
         if (currentMenuItem != null) {
             this.customizations = MenuItemProvider
-                    .getCustomizations(currentMenuItem);
+                    .getCustomizationsWithMenuCustomizationId(currentMenuItem);
             customizations.stream().forEach((cus) -> {
                 selectedCustomizations.put(cus.id, false);
             });

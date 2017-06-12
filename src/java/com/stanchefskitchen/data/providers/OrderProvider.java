@@ -28,10 +28,11 @@ public class OrderProvider {
     private static final String CUSTOM_BY_ID = "SELECT * FROM orderItemCustomization WHERE orderId = ?;";
     private static final String ORDER_BY_CUSTOMER = "SELECT * FROM orders WHERE customerId = ?;";
     private static final String INSERT_ORDER = "INSERT INTO orders (customerId, billId, isDelivery) VALUES (?,?, ?);";
-    private static final String INSERT_ITEM = "INSERT INTO orderItem (orderId, itemName, quantity);" +
+    private static final String INSERT_ITEM = "INSERT INTO orderItem (orderId, itemName, quantity)" +
             "VALUES (?,?,?)";
     private static final String INSERT_CUSTOM = "INSERT INTO orderItemCustomization VALUES (?,?);";
     private static final String UPDATE_STATUS = "UPDATE orders SET status = ?::orderstatus WHERE id = ?;";
+    private static final String INSERT_ORDER_ADDRESS = "INSERT INTO orderaddress (orderid, address, city, state, zipcode) VALUES (?, ?, ?, ?, ?);";
     
     public static ArrayList<Order> getIncompleteOrders() {
         try {
@@ -48,6 +49,22 @@ public class OrderProvider {
         catch (SQLException e) {
             System.out.println("Error getting orders: "+e.toString());
             return null;
+        }
+    }
+    
+    public static void addOrderAddress(int orderId, String address, String city, String state, String zipcode) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(INSERT_ORDER_ADDRESS);
+            statement.setInt(1, orderId);
+            statement.setString(2, address);
+            statement.setString(3, city);
+            statement.setString(4, state);
+            statement.setString(5, zipcode);
+            statement.execute();            
+        }
+        catch (SQLException e) {
+            System.out.println("Error setting order address: "+e.toString());
+            e.printStackTrace();
         }
     }
     
@@ -144,15 +161,18 @@ public class OrderProvider {
     
     public static OrderItem addOrderItem(int orderId, String itemName, int quantity) {
         try {
-            PreparedStatement statement = connection.prepareStatement(INSERT_ITEM);
+            PreparedStatement statement = connection.prepareStatement(INSERT_ITEM, new String[] {"id"});
             statement.setInt(1, orderId);
             statement.setString(2, itemName);
             statement.setInt(3, quantity);
             statement.executeUpdate();
             
             ResultSet generatedKeys = statement.getGeneratedKeys();
-            generatedKeys.next();
-            int newId = generatedKeys.getInt(1);
+            int newId = -1;
+            
+            while (generatedKeys.next()) {
+                newId = generatedKeys.getInt("id");
+            }
             
             return new OrderItem(newId, orderId, itemName, quantity);
         }
@@ -165,7 +185,7 @@ public class OrderProvider {
     
     public static OrderItemCustomization addOrderCustomization(int orderItemId, int menuItemCustomizationId) {
         try {
-            PreparedStatement statement = connection.prepareStatement(INSERT_ORDER);
+            PreparedStatement statement = connection.prepareStatement(INSERT_CUSTOM);
             statement.setInt(1, orderItemId);
             statement.setInt(2, menuItemCustomizationId);
             statement.executeUpdate();
@@ -174,7 +194,7 @@ public class OrderProvider {
         }
         catch (SQLException e) {
             System.out.println("Error adding order item: "+e.toString());
-            
+            e.printStackTrace();
             return null;
         }
     }
