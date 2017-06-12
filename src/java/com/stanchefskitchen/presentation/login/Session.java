@@ -2,6 +2,7 @@ package com.stanchefskitchen.presentation.login;
 
 import com.stanchefskitchen.data.models.Account;
 import com.stanchefskitchen.data.providers.AccountProvider;
+import com.stanchefskitchen.presentation.NavController;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -91,10 +92,11 @@ public class Session implements Serializable {
         return newPasswordInput;
     }
 
-    public void logout() {
+    public String logout() {
         account = null;
         username = null;
         password = null;
+        return NavController.LOGIN;
     }
 
     public void validateLogin(FacesContext context, UIComponent component,

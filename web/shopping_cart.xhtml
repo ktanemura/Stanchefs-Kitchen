@@ -24,7 +24,9 @@
             <h:outputText value="Your shopping cart has #{shoppingCart.itemCount} item(s)" style="padding-top: 24px; padding-bottom: 24px;"/>
             <h:form>
                 <div class="row">
-
+                    <div class="col s12">
+                        <h:commandButton value="Clear shopping cart" class="waves-effect waves-light btn red lighten-1" action="#{shoppingCart.clearCart()}"/>
+                    </div>
                     <h:dataTable value="#{shoppingCart.orderItems}" var="itm" class="centered striped" border="1" >
                         <h:column>
                             <f:facet name="header">Item</f:facet>
@@ -50,9 +52,7 @@
 
                     <h:outputLabel class="col s2" value="Total" style="margin-bottom: 12px; margin-top: 12px;"/>
                     <h:outputText class="col s10" value="#{shoppingCart.stringTotal}" style="margin-bottom: 12px; margin-top: 12px;"/>
-                    <div class="col s12">
-                        <h:commandButton value="Clear shopping cart" class="waves-effect waves-light btn red lighten-1" action="#{shoppingCart.clearCart()}"/>
-                    </div>
+                    
                     <div class="col s12" style="padding-top: 12px;">
                         <h:commandButton value="Checkout" class="waves-effect waves-light btn red lighten-1" disabled="#{shoppingCart.isEmpty()}" action="#{shoppingCart.checkout()}"/>
                     </div>       
